@@ -47,12 +47,17 @@ class EDS implements IndexInterface
             $params
         );
 
+
+
         $items =  collect([]);
         if($response->ok()){
-            foreach ($response->json()['SearchResult']['Data']['Records'] as $record){
-                $items->push(new Item([
+            $records = collect($response->json()['SearchResult']['Data']['Records']);
+            foreach ($records as $key => $record){
+                $items->put('EDS_' . $key, new Item([
+                    'index' => 'EDS',
                     'name' => $this->getName($record),
                     'author' => $this->getAuthor($record),
+                    'relevancy' => (($record['Header']['RelevancyScore'] - $records->min('Header.RelevancyScore'))/($records->max('Header.RelevancyScore') - $records->min('Header.RelevancyScore'))) * 100,
                 ]));
             }
         }
@@ -72,6 +77,17 @@ class EDS implements IndexInterface
     }
 
     private function getAuthor($record)
+    {
+        $author = '';
+        try{
+            $author = collect($record['Items'])->where('Name', 'Author')->first()['Data'];
+        }catch(\Exception $e){
+
+        }
+        return $author;
+    }
+
+    private function getRelevancyScore($record)
     {
         $author = '';
         try{

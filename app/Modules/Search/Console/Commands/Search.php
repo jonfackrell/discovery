@@ -41,9 +41,17 @@ class Search extends Command
     {
         $query = $this->argument('query');
         $this->info('You are searching: ' . $query);
-        $index = Manager::get('EDS');
-        foreach ($index->search($query) as $item){
-            $this->info('Title: ' . $item->name);
+
+        // get all managers
+        // Loop through managers to get search results
+        // combine search results
+        $indexes = collect([]);
+        foreach(['EDS', 'Google'] as $index){
+            $indexes = $indexes->merge(Manager::get($index)->search($query));
+        }
+        // TODO: process other elements such as facets
+        foreach ($indexes->sortByDesc('relevancy') as $key => $item){
+            $this->info('Index: '  . $item->index . ' | Relevancy: '  . $item->relevancy . ' | Title: ' . $item->name);
         }
     }
 }
