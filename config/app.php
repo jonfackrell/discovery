@@ -166,6 +166,8 @@ return [
          * Package Service Providers...
          */
 
+        App\Modules\Search\Providers\SearchServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
