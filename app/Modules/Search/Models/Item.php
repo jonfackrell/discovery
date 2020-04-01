@@ -13,7 +13,7 @@ class Item extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'author',
+        'index', 'relevancy', 'name', 'author',
     ];
 
     /**
