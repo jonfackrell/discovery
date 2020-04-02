@@ -4,6 +4,7 @@ namespace App\Modules\Search\Indexes;
 
 use App\Item;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class EDS implements IndexInterface
 {
@@ -51,18 +52,35 @@ class EDS implements IndexInterface
 
         $items =  collect([]);
         if($response->ok()){
+            Log::info($response->json()['SearchResult']['Data']);
             $records = collect($response->json()['SearchResult']['Data']['Records']);
+            $min = $records->min('Header.RelevancyScore');
+            $max = $records->max('Header.RelevancyScore');
             foreach ($records as $key => $record){
-                $items->put('EDS_' . $key, new Item([
-                    'index' => 'EDS',
-                    'name' => $this->getName($record),
-                    'author' => $this->getAuthor($record),
-                    'relevancy' => (($record['Header']['RelevancyScore'] - $records->min('Header.RelevancyScore'))/($records->max('Header.RelevancyScore') - $records->min('Header.RelevancyScore'))) * 100,
-                ]));
+                $items->put('EDS_' . $key, new \App\Modules\Search\Models\EDS\Item($record, ['relevancy' => intval((($record['Header']['RelevancyScore'] - $min)/($max - $min)) * 100)]));
             }
         }
 
         return $items;
+    }
+
+    public function retrieve($id)
+    {
+        list($database, $an) = explode('|', $id);
+
+        $response = Http::withHeaders($this->headers)->post($this->baseUri . 'edsapi/rest/Retrieve',
+            [
+                'DbId' => $database,
+                'An' => $an,
+                'EbookPreferredFormat' => 'ebook-epub',
+            ]
+        );
+
+        if($response->ok()){
+            return $response->json()['Record'];
+        }else{
+            dd('Error');
+        }
     }
 
     private function getName($record)
@@ -77,17 +95,6 @@ class EDS implements IndexInterface
     }
 
     private function getAuthor($record)
-    {
-        $author = '';
-        try{
-            $author = collect($record['Items'])->where('Name', 'Author')->first()['Data'];
-        }catch(\Exception $e){
-
-        }
-        return $author;
-    }
-
-    private function getRelevancyScore($record)
     {
         $author = '';
         try{

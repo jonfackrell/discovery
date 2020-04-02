@@ -2,6 +2,7 @@
 
 namespace App\Modules\Search\Providers;
 
+use App\Modules\Search\Console\Commands\Retrieve;
 use App\Modules\Search\Console\Commands\Search;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -27,6 +28,7 @@ class SearchServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
+                Retrieve::class,
                 Search::class,
             ]);
         }
