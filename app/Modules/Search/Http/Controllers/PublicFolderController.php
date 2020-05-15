@@ -20,8 +20,8 @@ class PublicFolderController extends Controller
         $folderItems = FolderItem::whereIn('folder_id', array_merge([$folder->id], $folder->folders->pluck('id')->all()))
                                     ->paginate(25);
 
-        foreach($folderItems as $folderItem){
-            if(!empty($folderItem->data)){
+        foreach ($folderItems as $folderItem) {
+            if (!empty($folderItem->data)) {
                 $items[] = (new \App\Modules\Search\Models\EDS\Item())->setRecord($folderItem->data);
             }
         }

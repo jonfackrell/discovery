@@ -8,6 +8,6 @@ class FullSortkey extends Model
 {
     public function fshelf()
     {
-        return $this->hasOne(FullShelf::class,'user_id');
+        return $this->hasOne(FullShelf::class, 'user_id');
     }
 }

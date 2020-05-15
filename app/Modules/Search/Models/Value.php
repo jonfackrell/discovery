@@ -35,5 +35,4 @@ class Value extends Model
     protected $casts = [
 
     ];
-
 }

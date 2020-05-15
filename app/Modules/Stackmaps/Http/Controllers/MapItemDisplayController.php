@@ -17,16 +17,16 @@ class MapItemDisplayController extends Controller
      */
     public function __invoke(Request $request, $collection, $call)
     {
-
-        $response = Http::get('https://abish.byui.edu/horizon/api/index.cfm/summary/',
+        $response = Http::get(
+            'https://abish.byui.edu/horizon/api/index.cfm/summary/',
             [
                 'authorization' => env('HORIZON_API_TOKEN'),
             ]
         );
 
-        if($response->ok()){
+        if ($response->ok()) {
             $map = (new Map)->locate($response->json()['collection'], $response->json()['call_number']);
-        }else{
+        } else {
             $map = null;
         }
 

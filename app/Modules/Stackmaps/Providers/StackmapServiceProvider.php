@@ -31,6 +31,5 @@ class StackmapServiceProvider extends ServiceProvider
 
             ]);
         }
-
     }
 }

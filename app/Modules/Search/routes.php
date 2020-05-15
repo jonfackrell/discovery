@@ -12,7 +12,6 @@ use App\Modules\Search\Http\Controllers\UserSearchController;
 Route::get('/search', SearchController::class)->name('search');
 
 Route::middleware(['auth'])->group(function () {
-
     Route::get('/item/{item}', ItemController::class)->name('item.view');
     Route::get('/item/{item}/fulltext', FulltextController::class)->name('item.fulltext');
     Route::get('/export/{records}', ExportController::class)->name('export.refworks');
@@ -23,5 +22,4 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/folder/{uuid}/public', PublicFolderController::class)->name('folder.link.public');
 
     Route::get('/user/search', UserSearchController::class)->name('user.search');
-
 });

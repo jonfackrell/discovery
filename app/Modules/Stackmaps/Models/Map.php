@@ -8,10 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Map extends Model
 {
-
     public function locate($collection, $callno)
     {
-        if(in_array($collection, ['Maps - 1st Floor East Wing', 'Service Desk - DVDs', 'Service Desk - CDs'])){
+        if (in_array($collection, ['Maps - 1st Floor East Wing', 'Service Desk - DVDs', 'Service Desk - CDs'])) {
             $map = Map::where('collection', $collection)
                 ->first();
             return $map;
@@ -22,7 +21,7 @@ class Map extends Model
         $smask = $masks[1];
         $calla = $masks[2];
 
-        $pre_sort_key = \App\Modules\Stackmaps\Models\Sort::pMask($amask,$smask,$callno,$calla);
+        $pre_sort_key = \App\Modules\Stackmaps\Models\Sort::pMask($amask, $smask, $callno, $calla);
         //dd($pre_sort_key);
         $map = Map::where('collection', $collection)
                     ->where('start', '<=', $pre_sort_key)
@@ -40,7 +39,6 @@ class Map extends Model
         $smask = $masks[1];
         $calla = $masks[2];
 
-        return \App\Modules\Stackmaps\Models\Sort::pMask($amask,$smask,$callno,$calla);
+        return \App\Modules\Stackmaps\Models\Sort::pMask($amask, $smask, $callno, $calla);
     }
-
 }

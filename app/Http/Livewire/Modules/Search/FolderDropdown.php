@@ -9,7 +9,6 @@ use Livewire\Component;
 
 class FolderDropdown extends Component
 {
-
     public $index;
     public $database;
     public $an;
@@ -31,7 +30,7 @@ class FolderDropdown extends Component
 
     public function render()
     {
-        if(auth()->check()){
+        if (auth()->check()) {
             $this->folders = auth()->user()->folders;
             $this->shares = auth()->user()->shares;
         }
@@ -57,7 +56,6 @@ class FolderDropdown extends Component
         event(new ItemAddedToFolder($up));
 
         $this->emit('refreshFolders');
-
     }
 
     public function refreshFolders()
@@ -67,19 +65,19 @@ class FolderDropdown extends Component
 
     public function toggleFolder($folder)
     {
-        if(FolderItem::where('user_id', auth()->user()->id)
+        if (FolderItem::where('user_id', auth()->user()->id)
             ->where('index', $this->index)
             ->where('database', $this->database)
             ->where('an', $this->an)
             ->where('folder_id', $folder)
-            ->first()){
+            ->first()) {
             FolderItem::where('user_id', auth()->user()->id)
                 ->where('index', $this->index)
                 ->where('database', $this->database)
                 ->where('an', $this->an)
                 ->where('folder_id', $folder)
                 ->delete();
-        }else{
+        } else {
             $up = new FolderItem();
             $up->index = $this->index;
             $up->database = $this->database;
@@ -93,5 +91,4 @@ class FolderDropdown extends Component
         $this->user_folders = FolderItem::where('index', $this->index)->where('database', $this->database)->where('an', $this->an)->where('user_id', auth()->user()->id)->pluck('folder_id')->all();
         //$this->emitSelf('loadSummary');
     }
-
 }

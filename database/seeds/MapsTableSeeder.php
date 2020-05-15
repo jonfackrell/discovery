@@ -3,7 +3,6 @@
 use App\Modules\Stackmaps\Models\Map;
 use Illuminate\Database\Seeder;
 
-
 class MapsTableSeeder extends Seeder
 {
     /**

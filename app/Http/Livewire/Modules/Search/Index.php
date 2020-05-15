@@ -10,7 +10,6 @@ use Livewire\Component;
 
 class Index extends Component
 {
-
     public $advanced = false;
     public $info = [];
     public $term = '';
@@ -125,37 +124,35 @@ class Index extends Component
 
     public function render()
     {
-        if($this->noSearchingRequired){
+        if ($this->noSearchingRequired) {
             $this->noSearchingRequired = false;
-        }
-        else if($this->readyToLoad && $this->hasTerm()){
+        } elseif ($this->readyToLoad && $this->hasTerm()) {
             /*if(env('CACHE_RESULTS') == true && session('search_results') == base64_encode()){
                 $items = session('items');
                 $facets = session('facets');
                 $this->items = $items;
                 $this->facets = $facets;
             }else{*/
-                $this->searchIndexes();
+            $this->searchIndexes();
 
-                $this->emit('resetSelectAll');
+            $this->emit('resetSelectAll');
 
-               /* if(env('CACHE_RESULTS') == true){
-                    session(['search_results' => base64_encode(url()->full())]);
-                    session(['items' => $this->items]);
-                    session(['facets' => $this->facets]);
-                }
+            /* if(env('CACHE_RESULTS') == true){
+                 session(['search_results' => base64_encode(url()->full())]);
+                 session(['items' => $this->items]);
+                 session(['facets' => $this->facets]);
+             }
 
             }*/
         }
 
-        if($this->advanced){
-            if(session('info')){
+        if ($this->advanced) {
+            if (session('info')) {
                 $this->info = session('info');
-            }else{
+            } else {
                 $this->info = Manager::get('EDS')->info();
                 session(['info' => $this->info]);
             }
-
         }
 
         return view('livewire.modules.search.index');
@@ -167,13 +164,13 @@ class Index extends Component
         $this->facets = [];
         $this->emit('clearFacets');
         $this->page = 1;
-        foreach ($data as $key => $value){
+        foreach ($data as $key => $value) {
             $this->{$key} = $value;
         }
-        if($this->thesaurus == 'false'){
+        if ($this->thesaurus == 'false') {
             $this->thesaurus = null;
         }
-        if($this->rel_subjects == 'false'){
+        if ($this->rel_subjects == 'false') {
             $this->rel_subjects = null;
         }
     }
@@ -191,19 +188,19 @@ class Index extends Component
 
         $appliedFacets = [];
         $id = 1;
-        foreach($this->facet as $fskey => $fs){
-            foreach($fs as $fkey => $f){
-                if($f == 'true' || $f == true){
+        foreach ($this->facet as $fskey => $fs) {
+            foreach ($fs as $fkey => $f) {
+                if ($f == 'true' || $f == true) {
                     $appliedFacets[] = "$fskey:$fkey";
                     $id++;
-                }else{
+                } else {
                     $this->facet[$fskey][$fkey] = null;
                 }
             }
         }
         //dd($appliedFacets);
         $total = 0;
-        foreach(['EDS'] as $index){
+        foreach (['EDS'] as $index) {
             $result = Manager::get($index)->search($this->term, [
                 'field' => $this->field,
                 'facets' => $appliedFacets,
@@ -239,7 +236,7 @@ class Index extends Component
         }
         $this->total = $total;
         // TODO: process other elements such as facets
-        foreach ($results->sortByDesc('relevancy') as $key => $item){
+        foreach ($results->sortByDesc('relevancy') as $key => $item) {
             $this->items[] = $item;
         }
         $this->facets = $facets->all();
@@ -248,11 +245,11 @@ class Index extends Component
 
     public function getPeriod()
     {
-        if(empty($this->period)){
+        if (empty($this->period)) {
             return null;
-        }else if($this->period == 'custom'){
+        } elseif ($this->period == 'custom') {
             return ['period' => $this->period, 'min' => $this->from, 'max' => $this->to];
-        }else{
+        } else {
             $now = now();
             return ['period' => $this->period, 'min' => $now->subYears($this->period)->format('Y-m'), 'max' => now()->format('Y-m')];
         }
@@ -266,9 +263,9 @@ class Index extends Component
     public function setFormatFacet($format)
     {
         $this->page = 1;
-        if($format == 'Dissertation/ Thesis'){
+        if ($format == 'Dissertation/ Thesis') {
             $this->facet['SourceType'][Str::plural('Dissertation')] = true;
-        }else{
+        } else {
             $this->facet['SourceType'][Str::plural($format)] = true;
         }
     }

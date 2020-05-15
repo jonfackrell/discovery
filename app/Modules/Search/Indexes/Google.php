@@ -9,7 +9,6 @@ use JanDrda\LaravelGoogleCustomSearchEngine\LaravelGoogleCustomSearchEngine;
 
 class Google implements IndexInterface
 {
-
     private $baseUri;
     private $headers;
     private $userid;
@@ -22,7 +21,6 @@ class Google implements IndexInterface
 
     public function __construct()
     {
-
     }
 
     public function isAvailable()
@@ -36,7 +34,7 @@ class Google implements IndexInterface
         $results = $fulltext->getResults($query); // get first 10 results for query 'some phrase'
 
         $items =  collect([]);
-        foreach ($results as $key => $record){
+        foreach ($results as $key => $record) {
             $items->put('Google_' . $key, new Item([
                 'index' => 'Google',
                 'name' => $this->getName($record),
@@ -51,10 +49,9 @@ class Google implements IndexInterface
     private function getName($record)
     {
         $name = '';
-        try{
+        try {
             $name = $record->title;
-        }catch(\Exception $e){
-
+        } catch (\Exception $e) {
         }
         return $name;
     }
@@ -62,12 +59,10 @@ class Google implements IndexInterface
     private function getAuthor($record)
     {
         $author = '';
-        try{
+        try {
             $author = $record->displayLink;
-        }catch(\Exception $e){
-
+        } catch (\Exception $e) {
         }
         return $author;
     }
-
 }

@@ -39,11 +39,13 @@ class User extends Authenticatable
         'options' => 'array',
     ];
 
-    public function getFirstNameAttribute(){
+    public function getFirstNameAttribute()
+    {
         return explode(' ', $this->name)[0];
     }
 
-    public function getLastNameAttribute(){
+    public function getLastNameAttribute()
+    {
         return last(explode(' ', $this->name));
     }
 

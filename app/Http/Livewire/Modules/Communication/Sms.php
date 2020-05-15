@@ -8,7 +8,6 @@ use Livewire\Component;
 
 class Sms extends Component
 {
-
     public $items = [];
 
     protected $listeners = [
@@ -31,18 +30,18 @@ class Sms extends Component
         $phoneNumber = $data['phone_number'];
         session(['phone_number' => $phoneNumber]);
 
-        foreach ($this->items as $item){
-            $response = Http::get("https://abish.byui.edu/horizon/api/index.cfm/sms/" . $item['item'],
+        foreach ($this->items as $item) {
+            $response = Http::get(
+                "https://abish.byui.edu/horizon/api/index.cfm/sms/" . $item['item'],
                 [
                     'authorization' => env('HORIZON_API_TOKEN'),
                 ]
             );
             $record = $response->json()['items'][0];
-            if($response->ok()){
+            if ($response->ok()) {
                 $message = Str::limit($record['call_number'] . ' ' . $record['collection'] . ' ' . $record['title'], 90, '...');
                 \Twilio::message($phoneNumber, $message);
             }
         }
-
     }
 }

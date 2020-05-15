@@ -46,11 +46,11 @@ class Search extends Command
         // Loop through managers to get search results
         // combine search results
         $indexes = collect([]);
-        foreach(['EDS', 'Google'] as $index){
+        foreach (['EDS', 'Google'] as $index) {
             $indexes = $indexes->merge(Manager::get($index)->search($query));
         }
         // TODO: process other elements such as facets
-        foreach ($indexes->sortByDesc('relevancy') as $key => $item){
+        foreach ($indexes->sortByDesc('relevancy') as $key => $item) {
             $this->info('Index: '  . $item->index . ' | Relevancy: '  . $item->relevancy . ' | Title: ' . $item->name);
         }
     }

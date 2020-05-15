@@ -33,5 +33,4 @@ class Facet extends Model
     protected $casts = [
 
     ];
-
 }

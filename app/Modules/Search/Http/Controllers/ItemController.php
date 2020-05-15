@@ -13,7 +13,6 @@ class ItemController extends Controller
      */
     public function __invoke(Request $request, $item)
     {
-
         return view('Search::show', [
 
         ]);

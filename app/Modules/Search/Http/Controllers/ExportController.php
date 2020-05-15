@@ -16,7 +16,7 @@ class ExportController extends Controller
     {
         $records = explode('|', $request->records);
         $items = [];
-        foreach($records as $record){
+        foreach ($records as $record) {
             list($index, $database, $an) = explode(':', $record);
             $items[] = Manager::get($index)->export($database, $an);
         }

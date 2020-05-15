@@ -11,7 +11,6 @@ use Illuminate\Support\Str;
 
 class EDS implements IndexInterface
 {
-
     private $baseUri;
     private $headers;
     private $userid;
@@ -47,7 +46,8 @@ class EDS implements IndexInterface
     {
         $params = $this->buildRequest($query, $options);
         //dd($params);
-        $response = Http::withHeaders($this->headers)->post($this->baseUri . 'edsapi/rest/Search',
+        $response = Http::withHeaders($this->headers)->post(
+            $this->baseUri . 'edsapi/rest/Search',
             $params
         );
         //logger()->info($response->json());
@@ -67,8 +67,8 @@ class EDS implements IndexInterface
         ];
 
         $items =  collect([]);
-        if($response->ok()){
-            if(!array_key_exists('Records', $response->json()['SearchResult']['Data'])){
+        if ($response->ok()) {
+            if (!array_key_exists('Records', $response->json()['SearchResult']['Data'])) {
                 return $results;
             }
             //Log::info($response->json()['SearchResult']['Data']);
@@ -76,7 +76,7 @@ class EDS implements IndexInterface
             $books = 0;
             $ebooks = 0;
             $printbooks = 0;
-            foreach ($response->json()['SearchResult']['AvailableFacets'] as $facet){
+            foreach ($response->json()['SearchResult']['AvailableFacets'] as $facet) {
                 $values = collect($facet['AvailableFacetValues'])->map(function ($value) {
                     return [
                         'name' => $value['Value'],
@@ -85,33 +85,32 @@ class EDS implements IndexInterface
                     ];
                 });
 
-                if($facet['Label'] == 'Source Type'){
+                if ($facet['Label'] == 'Source Type') {
                     //dd($values->where('name', 'EBooks')->first()['count']);
-                    try{
+                    try {
                         $books = $values->where('name', 'Books')->first()['count'];
-                    }catch (\Exception $exception){
+                    } catch (\Exception $exception) {
                         $books = null;
                     }
-                    try{
+                    try {
                         $ebooks = $values->where('name', 'eBooks')->first()['count'];
-                    }catch (\Exception $exception) {
+                    } catch (\Exception $exception) {
                         $ebooks = null;
                     }
-                    if(is_null($books)){
+                    if (is_null($books)) {
                         $printbooks = 0;
-                    }else if(is_null($ebooks)){
+                    } elseif (is_null($ebooks)) {
                         $printbooks = $books;
-                    }else{
+                    } else {
                         $printbooks = $books - $ebooks;
                     }
-                    if($printbooks > 0){
+                    if ($printbooks > 0) {
                         $values->push([
                             'name' => 'Print Books',
                             'count' => $books - $ebooks,
                             'action' => 'Print Books',
                         ]);
                         $values = $values->sortByDesc('count')->values();
-
                     }
                 }
 
@@ -124,15 +123,14 @@ class EDS implements IndexInterface
             $records = collect($response->json()['SearchResult']['Data']['Records']);
             $min = $records->min('Header.RelevancyScore');
             $max = $records->max('Header.RelevancyScore');
-            foreach ($records as $key => $record){
+            foreach ($records as $key => $record) {
                 $relevancy = (($max-$min)>0)?intval((($record['Header']['RelevancyScore'] - $min)/($max - $min)) * 100):100;
                 $results['records']->put('EDS_' . $key, (new \App\Modules\Search\Models\EDS\Item(['relevancy' => $relevancy]))->setRecord($record));
             }
-        }elseif($response->status() == 400){
+        } elseif ($response->status() == 400) {
             session()->forget('session_token');
             $this->getSessionToken();
             return $this->search($query, $options);
-
         }
 
         return $results;
@@ -142,7 +140,8 @@ class EDS implements IndexInterface
     {
         list($database, $an) = explode('|', $id);
 
-        $response = Http::withHeaders($this->headers)->post($this->baseUri . 'edsapi/rest/Retrieve',
+        $response = Http::withHeaders($this->headers)->post(
+            $this->baseUri . 'edsapi/rest/Retrieve',
             [
                 'DbId' => $database,
                 'An' => $an,
@@ -150,14 +149,13 @@ class EDS implements IndexInterface
             ]
         );
 
-        if($response->ok()){
+        if ($response->ok()) {
             return $response->json()['Record'];
-        }elseif($response->status() == 400){
+        } elseif ($response->status() == 400) {
             session()->forget('session_token');
             $this->getSessionToken();
             return $this->retrieve($id);
-
-        }else{
+        } else {
             dd($response->body());
         }
     }
@@ -168,14 +166,13 @@ class EDS implements IndexInterface
     {
         $response = Http::withHeaders($this->headers)->get($this->baseUri . 'edsapi/rest/Info');
 
-        if($response->ok()){
+        if ($response->ok()) {
             return $response->json();
-        }elseif($response->status() == 400){
+        } elseif ($response->status() == 400) {
             session()->forget('session_token');
             $this->getSessionToken();
             return $this->info();
-
-        }else{
+        } else {
             dd($response->body());
         }
     }
@@ -184,7 +181,8 @@ class EDS implements IndexInterface
     {
         $styles = implode(',', $styles);
 
-        $response = Http::withHeaders($this->headers)->get($this->baseUri . 'edsapi/rest/CitationStyles',
+        $response = Http::withHeaders($this->headers)->get(
+            $this->baseUri . 'edsapi/rest/CitationStyles',
             [
                 'dbid' => $database,
                 'an' => $an,
@@ -192,14 +190,13 @@ class EDS implements IndexInterface
             ]
         );
 
-        if($response->ok()){
+        if ($response->ok()) {
             return $response->json()['Citations'];
-        }elseif($response->status() == 400){
+        } elseif ($response->status() == 400) {
             session()->forget('session_token');
             $this->getSessionToken();
             return $this->citations($database, $an, explode(',', $styles));
-
-        }else{
+        } else {
             dd($response->body());
         }
     }
@@ -208,7 +205,8 @@ class EDS implements IndexInterface
     {
         $format = implode(',', $format);
 
-        $response = Http::withHeaders($this->headers)->get($this->baseUri . 'edsapi/rest/ExportFormat',
+        $response = Http::withHeaders($this->headers)->get(
+            $this->baseUri . 'edsapi/rest/ExportFormat',
             [
                 'dbid' => $database,
                 'an' => $an,
@@ -216,14 +214,13 @@ class EDS implements IndexInterface
             ]
         );
 
-        if($response->ok()){
+        if ($response->ok()) {
             return $response->json();
-        }elseif($response->status() == 400){
+        } elseif ($response->status() == 400) {
             session()->forget('session_token');
             $this->getSessionToken();
             return $this->export($database, $an, explode(',', $format));
-
-        }else{
+        } else {
             dd($response->body());
         }
     }
@@ -237,19 +234,19 @@ class EDS implements IndexInterface
         $expanders = [];
 
         $expanders[] = 'fulltext';
-        if(array_key_exists('period', $options) && !empty($options['period'])){
+        if (array_key_exists('period', $options) && !empty($options['period'])) {
             $actions[] = "AddLimiter(DT1:" . $options['period']['min'] . '/' . $options['period']['max'] . ")";
         }
-        if(array_key_exists('field', $options) && !empty($options['field']) && $options['field'] != 'KW'){
+        if (array_key_exists('field', $options) && !empty($options['field']) && $options['field'] != 'KW') {
             $actions[] = "AddLimiter(" .$options['field'] . ":" . $query . ")";
         }
-        if(!is_null($options['language']) && !empty($options['language'])){
+        if (!is_null($options['language']) && !empty($options['language'])) {
             $options['facets'][] = "Language:" . Str::lower($options['language']);
         }
-        if($options['thesaurus'] == true){
+        if ($options['thesaurus'] == true) {
             $expanders[] = 'thesaurus';
         }
-        if($options['rel_subjects'] == true){
+        if ($options['rel_subjects'] == true) {
             $expanders[] = 'relatedsubjects';
         }
         /*
@@ -261,55 +258,55 @@ class EDS implements IndexInterface
                 ]
             ];
         }*/
-        if(!is_null($options['type']) && !empty($options['type'])){
+        if (!is_null($options['type']) && !empty($options['type'])) {
             $options['facets'][] = "SourceType:{$options['type']}";
         }
-        if(is_array($options['facets']) && count($options['facets']) > 0){
+        if (is_array($options['facets']) && count($options['facets']) > 0) {
             /*foreach($options['facets'] as $facet){
                 $facets[] = "AddFacetFilter(" . $facet . "),";
             }*/
             $setLanguage = true;
-            foreach($options['facets'] as $key => $facet){
-                if(Str::startsWith($facet, 'Language')){
+            foreach ($options['facets'] as $key => $facet) {
+                if (Str::startsWith($facet, 'Language')) {
                     $setLanguage = false;
                 }
-                if(Str::startsWith($facet, 'SourceType') && Str::endsWith($facet,'Print Books')){
+                if (Str::startsWith($facet, 'SourceType') && Str::endsWith($facet, 'Print Books')) {
                     $query .= ' AND ((PT Book NOT PT eBook)';
                     unset($options['facets'][$key]);
                 }
             }
-            if($setLanguage && empty($options['language'])){
+            if ($setLanguage && empty($options['language'])) {
                 $options['facets'][] = "Language:english";
             }
 
             $facets[] = "AddFacetFilter(2," . implode(',', $options['facets']) . ")";
-        }else{
-            if(empty($options['language'])){
+        } else {
+            if (empty($options['language'])) {
                 $options['facets'][] = "Language:english";
                 $facets[] = "AddFacetFilter(2," . implode(',', $options['facets']) . ")";
             }
         }
         //dd($facets);
-        if(array_key_exists('fullText', $options) && $options['fullText'] == 'true'){
+        if (array_key_exists('fullText', $options) && $options['fullText'] == 'true') {
             $actions[] = 'AddExpander(fulltext)';
         }
-        if(array_key_exists('peerReviewed', $options) && $options['peerReviewed'] == 'true'){
+        if (array_key_exists('peerReviewed', $options) && $options['peerReviewed'] == 'true') {
             $actions[] = 'AddLimiter(RV:y)';
         }
-        if(array_key_exists('available', $options) && $options['available'] == 'true'){
+        if (array_key_exists('available', $options) && $options['available'] == 'true') {
             $actions[] = 'AddLimiter(FT1:y)';
-        }elseif(!array_key_exists('available', $options)){
+        } elseif (!array_key_exists('available', $options)) {
             $actions[] = 'AddLimiter(FT1:y)';
         }
-        if(array_key_exists('page', $options) && !is_null($options['page'])){
+        if (array_key_exists('page', $options) && !is_null($options['page'])) {
             $page = $options['page'];
             $actions[] = 'GoToPage(' . $options['page'] . ')';
-        }else{
+        } else {
             $page = 1;
         }
-        if(array_key_exists('queries', $options)){
-            foreach($options['queries'] as $q){
-                if(!is_null($q['tag']) && strlen($q['term']) > 0){
+        if (array_key_exists('queries', $options)) {
+            foreach ($options['queries'] as $q) {
+                if (!is_null($q['tag']) && strlen($q['term']) > 0) {
                     $queries[] = "AddQuery({$q['operation']},{$q['tag']}:{$q['term']})";
                 }
             }
@@ -344,16 +341,15 @@ class EDS implements IndexInterface
 
         //dd($params);
         return $params;
-
     }
 
     private function getAuthToken()
     {
         $index = Index::where('name', 'EDS')->first();
-        if($index->auth_token_expires_at > now()){
+        if ($index->auth_token_expires_at > now()) {
             $authToken = $index->auth_token;
             $authTimeout = $index->auth_token_expires_at;
-        }else{
+        } else {
             $response = Http::withHeaders($this->headers)->post($this->baseUri . 'authservice/rest/UIDAuth', [
                 'UserId' => $this->userid,
                 'Password' => $this->password,
@@ -369,20 +365,19 @@ class EDS implements IndexInterface
         $this->authToken = $authToken;
         $this->authTimeout = $authTimeout;
         $this->headers['x-authenticationToken'] = $authToken;
-
     }
 
     private function getSessionToken()
     {
-        if(session('session_token')){
+        if (session('session_token')) {
             $sessionToken = session('session_token');
-        }else{
+        } else {
             $response = Http::withHeaders($this->headers)->post($this->baseUri . 'edsapi/rest/createsession', [
                 'Profile' => $this->profile,
                 'Org' => $this->org
             ]);
 
-            if($response->ok()){
+            if ($response->ok()) {
                 $sessionToken = $response->json()['SessionToken'];
                 session(['session_token' => $sessionToken]);
             }
@@ -391,5 +386,4 @@ class EDS implements IndexInterface
         $this->sessionToken = $sessionToken;
         $this->headers['x-sessionToken'] = $sessionToken;
     }
-
 }

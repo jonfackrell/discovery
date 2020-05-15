@@ -44,6 +44,5 @@ class Retrieve extends Command
 
         list($index, $id) = explode(':', $query);
         $this->info(Manager::get($index)->retrieve($id));
-
     }
 }

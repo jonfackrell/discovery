@@ -41,5 +41,4 @@ class Item extends Model
     {
         return $this->belongsToMany(Folder::class)->where('user_id', optional(auth()->user())->id);
     }
-
 }

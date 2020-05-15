@@ -8,7 +8,6 @@ use Livewire\Component;
 
 class Marc extends Component
 {
-
     public $record;
 
     protected $listeners = [
@@ -22,7 +21,6 @@ class Marc extends Component
 
     public function showMarcRecord($bib)
     {
-
         $response = Http::withHeaders([
             'x-sirs-clientID' => 'DS_CLIENT',
             'SD-Preferred-Role' => 'GUEST',
@@ -31,9 +29,8 @@ class Marc extends Component
             'includeFields' => '*',
         ]);
 
-        if($response->ok()){
+        if ($response->ok()) {
             $this->record = $response->json();
         }
-
     }
 }

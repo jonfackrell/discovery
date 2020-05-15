@@ -52,6 +52,5 @@ class MapSearchController extends Controller
 
         //dd(Map::with('keys')->where('id', 1)->get());
         dd((new Map)->locate('PR6068.O93 H37 2017'));
-
     }
 }

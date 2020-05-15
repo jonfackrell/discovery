@@ -13,7 +13,6 @@ class LikeController extends Controller
      */
     public function __invoke(Request $request)
     {
-
         return view('Search::likes', [
 
         ]);

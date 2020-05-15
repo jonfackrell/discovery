@@ -65,7 +65,7 @@ class Folders extends Component
                     ->whereIn('folder_id', array_merge([$this->activeFolder], $this->folder->folders->pluck('id')->all()))
                     ->get();
 
-        foreach($folderItems as $item){
+        foreach ($folderItems as $item) {
             $citation = Manager::get($item->index)->citations($item->database, $item->an, [$this->format]);
             $citations->push($citation[0]);
         }
@@ -87,30 +87,30 @@ class Folders extends Component
 
     public function render()
     {
-        if($this->readyToLoad){
+        if ($this->readyToLoad) {
             $this->items = [];
             $this->folders = auth()->user()->folders;
 
             $this->shares = auth()->user()->shares;
 
-            if($this->activeFolder){
+            if ($this->activeFolder) {
                 $this->folder = Folder::with('folders')->where('id', $this->activeFolder)->first();
                 $folderItems = FolderItem::where('user_id', auth()->user()->id)
                                             ->whereIn('folder_id', array_merge([$this->activeFolder], $this->folder->folders->pluck('id')->all()))
                                             ->paginate(25);
                 $this->users = $this->folder->shares;
-            }else{
+            } else {
                 $folderItems = FolderItem::where('user_id', auth()->user()->id)->paginate(25);
             }
 
-            foreach($folderItems as $folderItem){
-                if(!empty($folderItem->data)){
+            foreach ($folderItems as $folderItem) {
+                if (!empty($folderItem->data)) {
                     $this->items[] = (new \App\Modules\Search\Models\EDS\Item())->setRecord($folderItem->data);
                 }
             }
             $pagination = $folderItems->links('livewire.modules.search.components.folder-pagination');
             $this->total = $folderItems->total();
-        }else{
+        } else {
             $this->items = [];
             $folderItems = [];
             $pagination = '';

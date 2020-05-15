@@ -9,7 +9,6 @@ use Livewire\Component;
 
 class BulkAction extends Component
 {
-
     public $selected = [];
     public $records = [];
     public $folders = [];
@@ -22,34 +21,36 @@ class BulkAction extends Component
 
     public function render()
     {
-        if(auth()->check()) {
+        if (auth()->check()) {
             $this->folders = auth()->user()->folders;
             $this->shares = auth()->user()->shares;
         }
         return view('livewire.modules.search.bulk-action');
     }
 
-    public function select($checked, $index, $database, $an){
-        if($checked) {
+    public function select($checked, $index, $database, $an)
+    {
+        if ($checked) {
             $this->selected[$index . ':' . $database . ':' . $an] = [
                 'index' => $index,
                 'database' => $database,
                 'an' => $an,
             ];
-        }else{
+        } else {
             unset($this->selected[$index . ':' . $database . ':' . $an]);
         }
     }
 
-    public function bulkSelect($checked, $items){
-        foreach($items as $key => $item){
-            if($checked) {
+    public function bulkSelect($checked, $items)
+    {
+        foreach ($items as $key => $item) {
+            if ($checked) {
                 $this->selected[$key] = [
                     'index' => $item['index'],
                     'database' => $item['database'],
                     'an' => $item['an'],
                 ];
-            }else{
+            } else {
                 unset($this->selected[$key]);
             }
         }
@@ -61,7 +62,7 @@ class BulkAction extends Component
         //auth()->user()->folders()->save($folder);
         $this->folders[] = $folder->toArray();
 
-        foreach($this->selected as $item){
+        foreach ($this->selected as $item) {
             $up = new FolderItem();
             $up->index = $item['index'];
             $up->database = $item['database'];
@@ -72,7 +73,6 @@ class BulkAction extends Component
             event(new ItemAddedToFolder($up));
             $this->emit('refreshFolders');
         }
-
     }
 
     public function refreshFolders()
@@ -82,7 +82,7 @@ class BulkAction extends Component
 
     public function toggleFolder($folder)
     {
-        foreach($this->selected as $item) {
+        foreach ($this->selected as $item) {
             if (FolderItem::where('user_id', auth()->user()->id)
                 ->where('index', $item['index'])
                 ->where('database', $item['database'])

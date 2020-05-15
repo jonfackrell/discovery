@@ -14,11 +14,13 @@ class UserSearchController extends Controller
      */
     public function __invoke(Request $request)
     {
-        if(strlen($request->get('q')) < 6) return [];
-        return User::select('id','name', 'email')
+        if (strlen($request->get('q')) < 6) {
+            return [];
+        }
+        return User::select('id', 'name', 'email')
             ->where('email', 'LIKE', '%'. $request->get('q') . '%')
             ->get()
-            ->map(function($item){
+            ->map(function ($item) {
                 return [
                     'id' => $item->id,
                     'text' => $item->name . ' (' . $item->email . ')',

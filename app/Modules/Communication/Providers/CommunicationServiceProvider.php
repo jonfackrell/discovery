@@ -29,6 +29,5 @@ class CommunicationServiceProvider extends ServiceProvider
 
             ]);
         }
-
     }
 }

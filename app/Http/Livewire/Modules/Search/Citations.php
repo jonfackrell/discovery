@@ -7,7 +7,6 @@ use Livewire\Component;
 
 class Citations extends Component
 {
-
     public $index;
     public $database;
     public $an;

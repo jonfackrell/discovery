@@ -11,7 +11,6 @@ use Livewire\Component;
 
 class Summary extends Component
 {
-
     public $item;
     public $folders = [];
     public $export = null;
@@ -20,7 +19,6 @@ class Summary extends Component
 
     public function mount(Item $item, string $display = 'summary')
     {
-
         $this->item = $item->toArray();
         $this->display = $display;
         /*$this->relevancy = $item->relevancy;
@@ -37,7 +35,6 @@ class Summary extends Component
 
     public function render()
     {
-
         $this->item['liked'] = Like::where('user_id', 1)
                                     ->where('index', $this->item['index'])
                                     ->where('database', $this->item['database'])
@@ -53,18 +50,18 @@ class Summary extends Component
 
     public function toggleLike($index, $database, $an)
     {
-        if(Like::where('user_id', auth()->user()->id)
+        if (Like::where('user_id', auth()->user()->id)
             ->where('index', $this->item['index'])
             ->where('database', $this->item['database'])
             ->where('an', $this->item['an'])
-            ->first()){
+            ->first()) {
             Like::where('user_id', auth()->user()->id)
                 ->where('index', $this->item['index'])
                 ->where('database', $this->item['database'])
                 ->where('an', $this->item['an'])
                 ->delete();
             $this->liked = false;
-        }else{
+        } else {
             $user = auth()->user();
             $like = new Like();
             $like->index = $index;

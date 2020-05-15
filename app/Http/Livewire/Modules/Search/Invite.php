@@ -5,7 +5,6 @@ use Livewire\Component;
 
 class Invite extends Component
 {
-
     public $email = null;
     public $folder;
     public $users = [];
@@ -22,7 +21,4 @@ class Invite extends Component
         $this->users = [];
         return view('livewire.modules.search.invite');
     }
-
-
-
 }

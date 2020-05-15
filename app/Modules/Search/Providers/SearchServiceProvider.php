@@ -32,6 +32,5 @@ class SearchServiceProvider extends ServiceProvider
                 Search::class,
             ]);
         }
-
     }
 }
