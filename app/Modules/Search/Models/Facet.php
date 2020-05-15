@@ -13,7 +13,7 @@ class Facet extends Model
      * @var array
      */
     protected $fillable = [
-
+        'identifier', 'name'
     ];
 
     /**

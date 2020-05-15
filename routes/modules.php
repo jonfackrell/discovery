@@ -14,3 +14,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group([], base_path('app/Modules/Search/routes.php'));
+Route::group([], base_path('app/Modules/Communication/routes.php'));
+Route::group([], base_path('app/Modules/Stackmaps/routes.php'));

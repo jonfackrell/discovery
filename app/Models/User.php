@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\SchemalessAttributes\SchemalessAttributes;
 
 class User extends Authenticatable
 {
@@ -35,6 +36,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'options' => 'array',
     ];
 
     public function getFirstNameAttribute(){
@@ -43,5 +45,41 @@ class User extends Authenticatable
 
     public function getLastNameAttribute(){
         return last(explode(' ', $this->name));
+    }
+
+    /**
+     * The folders that belong to the user.
+     */
+    public function folders()
+    {
+        return $this->hasMany(Folder::class)->whereNull('folder_id')->with('subFolders')->orderBy('name', 'ASC');
+    }
+
+    public function subFolders()
+    {
+        return $this->hasMany(Folder::class)->with('folders');
+    }
+
+    /**
+     * The likes that belong to the user.
+     */
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    public function shares()
+    {
+        return $this->belongsToMany(Folder::class, 'shared_folder');
+    }
+
+    public function getExtraAttributesAttribute(): SchemalessAttributes
+    {
+        return SchemalessAttributes::createForModel($this, 'options');
+    }
+
+    public function scopeWithExtraAttributes(): Builder
+    {
+        return SchemalessAttributes::scopeWithSchemalessAttributes('options');
     }
 }

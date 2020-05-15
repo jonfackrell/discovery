@@ -30,7 +30,9 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Route::bind('uuid', function ($uuid) {
+            return \App\Folder::whereUuid($uuid)->first();
+        });
 
         parent::boot();
     }

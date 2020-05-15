@@ -34,4 +34,12 @@ class Item extends Model
 
     ];
 
+    /**
+     * The folders that item belongs to.
+     */
+    public function folders()
+    {
+        return $this->belongsToMany(Folder::class)->where('user_id', optional(auth()->user())->id);
+    }
+
 }

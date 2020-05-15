@@ -1,0 +1,36 @@
+@font-face{
+    font-family:Oswald;
+    font-style:normal;
+    font-weight:400;
+    font-display:swap;
+    src:url(https://fonts.gstatic.com/s/oswald/v31/TK3_WkUHHAIjg75cFRf3bXL8LICs1_FvsUZiYA.ttf)
+    format('truetype')
+}
+
+@media (min-width: 1450px){
+
+    .navbar-brand-container {
+        margin-left: -100px!important;
+    }
+}
+
+.font-open-sans{
+    font-family: 'Open Sans',sans-serif;
+}
+
+.btn-raspberry{
+    background-color: #A5216F;
+    color:#ffffff;
+    font-family: 'Open Sans',sans-serif;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+
+    &:hover{
+        color: #ffffff;
+    }
+}
+
+.card{
+    border-radius: 0px;
+}

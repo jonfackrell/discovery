@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Modules\Search\Events\ItemAddedToFolder;
+use App\Modules\Search\Events\ItemLiked;
+use App\Modules\Search\Listeners\RetrieveFolderItem;
+use App\Modules\Search\Listeners\RetrieveItem;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -17,6 +21,12 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+        ItemLiked::class => [
+            RetrieveItem::class,
+        ],
+        ItemAddedToFolder::class => [
+            RetrieveFolderItem::class,
         ],
     ];
 
