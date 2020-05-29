@@ -25,7 +25,7 @@ class Marc extends Component
             'x-sirs-clientID' => 'DS_CLIENT',
             'SD-Preferred-Role' => 'GUEST',
             'sd-originating-app-id' => 'showmarc',
-        ])->get("https://hrzweb.byui.edu:8443/hzws/v1/catalog/bib/key/$bib", [
+        ])->get("https://hrzweb.byui.edu:8443/hzws/catalog/bib/key/$bib", [
             'includeFields' => '*',
         ]);
 

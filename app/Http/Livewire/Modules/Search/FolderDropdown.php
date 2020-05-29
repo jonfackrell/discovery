@@ -33,9 +33,9 @@ class FolderDropdown extends Component
         if (auth()->check()) {
             $this->folders = auth()->user()->folders;
             $this->shares = auth()->user()->shares;
+            $this->user_folders = FolderItem::where('index', $this->index)->where('database', $this->database)->where('an', $this->an)->where('user_id', auth()->user()->id)->pluck('folder_id')->all();
         }
 
-        $this->user_folders = FolderItem::where('index', $this->index)->where('database', $this->database)->where('an', $this->an)->where('user_id', auth()->user()->id)->pluck('folder_id')->all();
         return view('livewire.modules.search.folder-dropdown');
     }
 
