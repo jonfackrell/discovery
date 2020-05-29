@@ -157,7 +157,7 @@ class Item extends \App\Item
     {
         $name = '';
         try {
-            $name = $this->record['FullText']['Links'][0]['Url'];
+            $name = Str::replaceFirst('http://', 'https://', $this->record['FullText']['Links'][0]['Url'] );
         } catch (\Exception $e) {
         }
         return $name;
