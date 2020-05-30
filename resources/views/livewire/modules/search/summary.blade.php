@@ -49,7 +49,7 @@
                                 <div class="dropdown-menu dropdown-menu-right"
                                      aria-labelledby="tools_{{ $item['an'] }}"
                                 >
-                                    <a href="http://www.refworks.com/express/ExpressImport.asp?vendor=McKay%20Library&filter=RefWorks%20Tagged%20Format&encoding=65001&url={{ urlencode( route('export.refworks', ['records' => $item['index'] . ':' . $item['database'] . ':' . $item['an']])) }}"
+                                    <a href="http://www.refworks.com/express/ExpressImport.asp?vendor=McKay%20Library&filter=RIS%20Format&url={{ urlencode( route('export.refworks', ['records' => $item['index'] . ':' . $item['database'] . ':' . $item['an']])) }}"
                                        class="dropdown-item"
                                        target="export">
                                         Export to RefWorks
