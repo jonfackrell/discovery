@@ -85,7 +85,7 @@
 
 
             @if(count($selected) > 0)
-                <a href="http://www.refworks.com/express/ExpressImport.asp?vendor=McKay%20Library&filter=RefWorks%20Tagged%20Format&encoding=65001&url={{ urlencode( route('export.refworks', ['records' => implode('|', array_keys($selected))])) }}"
+                <a href="http://www.refworks.com/express/ExpressImport.asp?vendor=McKay%20Library&filter=RIS%20Format&url={{ urlencode( route('export.refworks', ['records' => implode('|', array_keys($selected))])) }}"
                    class="dropdown-item"
                    target="export">
                     Export to RefWorks

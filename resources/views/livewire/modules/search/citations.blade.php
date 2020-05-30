@@ -15,7 +15,7 @@
                         </div>
                     </div>
                     <div class="col-4">
-                        <a href="http://www.refworks.com/express/ExpressImport.asp?vendor=McKay%20Library&filter=RefWorks%20Tagged%20Format&encoding=65001&url={{ urlencode( route('export.refworks', ['records' => $index . ':' . $database . ':' . $an])) }}"
+                        <a href="http://www.refworks.com/express/ExpressImport.asp?vendor=McKay%20Library&filter=RIS%20Format&url={{ urlencode( route('export.refworks', ['records' => $index . ':' . $database . ':' . $an])) }}"
                            class="btn btn-raspberry rounded-none"
                            target="export">
                             Export to RefWorks
