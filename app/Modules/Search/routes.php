@@ -14,7 +14,7 @@ Route::get('/search', SearchController::class)->name('search');
 Route::middleware(['auth'])->group(function () {
     Route::get('/item/{item}', ItemController::class)->name('item.view');
     Route::get('/item/{item}/fulltext', FulltextController::class)->name('item.fulltext');
-    Route::get('/export/{records}', ExportController::class)->name('export.refworks');
+
 
     // My Account
     Route::get('/likes', LikeController::class)->name('account.likes');
@@ -23,3 +23,5 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/user/search', UserSearchController::class)->name('user.search');
 });
+
+Route::get('/export/{records}', ExportController::class)->name('export.refworks');
