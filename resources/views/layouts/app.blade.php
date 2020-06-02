@@ -192,14 +192,20 @@
     <script>
         function updateChatStatus(){
             $.get("http://libraryh3lp.com/presence/jid/byuidahos-queue/chat.libraryh3lp.com/text", function(status){
+                var $button = $('#chat-button');
                 if(status == 'available'){
-                    var $button = $('#chat-button');
                     $button.removeClass('text-red-600 border-red-600');
                     $button.addClass('text-green-600 border-green-600');
                     $button.attr('title', 'We\'re online and available to chat!');
+                    $button.find('svg').html('<path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>');
                     $button.on('click', function () {
                         window.location = 'https://library-byui-edu.byui.idm.oclc.org/library-chat#url=' + location.href;
                     });
+                }else{
+                    $button.removeClass('text-green-600 border-green-600');
+                    $button.addClass('text-red-600 border-red-600');
+                    $button.attr('title', 'Sorry, we are currently offline, but you can send us an email and we\'ll get back to you as soon as possible.');
+                    $button.find('svg').html('<path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z"></path><path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z"></path>');
                 }
             });
             if(window.updateChatTimeout > 60){
