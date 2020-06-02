@@ -340,12 +340,17 @@
         });
 
         $(function(){
-            window.updateChatTimeout = 0;
-            updateChatStatus();
-            window.chatStatusInterval = setInterval(function () {
+            if(window.self === window.top){
+                window.updateChatTimeout = 0;
                 updateChatStatus();
-                updateChatTimeout++;
-            }, 120000);
+                window.chatStatusInterval = setInterval(function () {
+                    updateChatStatus();
+                    updateChatTimeout++;
+                }, 120000);
+            }else{
+                $('#chat-button').remove();
+            }
+
             /*$(document).on('mouseenter', '.summary', function () {
                 var $resource = $(this);
                 if($resource.data('book') == true && $resource.find('.summary-container').data('loaded') == false){
