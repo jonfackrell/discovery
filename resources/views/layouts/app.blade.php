@@ -190,7 +190,7 @@
     @stack('scripts')
     <script>
         function updateChatStatus(){
-            $.get("http://libraryh3lp.com/presence/jid/byuidahos-queue/chat.libraryh3lp.com/text", function(status){
+            $.get("https://libraryh3lp.com/presence/jid/byuidahos-queue/chat.libraryh3lp.com/text", function(status){
                 var $button = $('#chat-button');
                 if(status == 'available'){
                     $button.removeClass('text-byuired-100 border-byuired-100');
