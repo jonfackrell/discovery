@@ -115,7 +115,7 @@
 
     <script id="summary-template" type="text/x-handlebars-template">
         <table class="table">
-            <thead class="bg-gray-50 font-semibold">
+            <thead class="bg-gray-50 font-semibold uppercase">
                 <tr>
                     <td class="p-1">
                         Library
