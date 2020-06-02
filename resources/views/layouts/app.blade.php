@@ -114,7 +114,7 @@
     </div>
 
     <div id="chat-button"
-         class="fixed bottom-0 right-0 mr-2 mb-2 p-2 text-byuired-100 border-byuired-100 bg-white border-solid border-2 h-16 w-16 rounded-full flex-shrink-0 cursor-pointer"
+         class="fixed bottom-0 right-0 mr-2 mb-2 p-2 text-gray-500 border-gray-500 bg-white border-solid border-2 h-16 w-16 rounded-full flex-shrink-0 cursor-pointer"
          title="Sorry, we are currently offline, but you can send us an email and we'll get back to you as soon as possible."
     >
         <svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewBox="0 0 24 24" stroke="currentColor">
