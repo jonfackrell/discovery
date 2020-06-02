@@ -117,7 +117,7 @@
          class="fixed bottom-0 right-0 mr-2 mb-2 p-2 text-byuired-100 border-byuired-100 bg-white border-solid border-2 h-16 w-16 rounded-full flex-shrink-0 cursor-pointer"
          title="Sorry, we are currently offline, but you can send us an email and we'll get back to you as soon as possible."
     >
-        <svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+        <svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewBox="0 0 24 24" stroke="currentColor">
             <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
         </svg>
     </div>
@@ -204,7 +204,7 @@
                     $button.removeClass('text-byuigreen-100 border-byuigreen-100');
                     $button.addClass('text-byuired-100 border-byuired-100');
                     $button.attr('title', 'Sorry, we are currently offline, but you can send us an email and we\'ll get back to you as soon as possible.');
-                    $button.find('svg').html('<svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>');
+                    $button.find('svg').html('<svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewBox="0 0 24 24" stroke="currentColor"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>');
                 }
             });
             if(window.updateChatTimeout > 60){
