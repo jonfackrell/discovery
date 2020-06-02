@@ -115,21 +115,21 @@
 
     <script id="summary-template" type="text/x-handlebars-template">
         <table class="table">
-            <thead class="thead-light">
-            <tr>
-                <td class="p-1">
-                    Library
-                </td>
-                <td class="p-1">
-                    Location
-                </td>
-                <td class="p-1">
-                    Call Number
-                </td>
-                <td class="p-1">
-                    Status
-                </td>
-            </tr>
+            <thead class="bg-gray-50 font-semibold">
+                <tr>
+                    <td class="p-1">
+                        Library
+                    </td>
+                    <td class="p-1">
+                        Location
+                    </td>
+                    <td class="p-1">
+                        Call Number
+                    </td>
+                    <td class="p-1">
+                        Status
+                    </td>
+                </tr>
             </thead>
             <tbody>
             @{{#each items}}

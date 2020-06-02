@@ -28,9 +28,9 @@
                         @if($items)
 
                             <div class="list card">
-                                <div class="card-body pt-0 pr-0" wire:loading.remove>
+                                <div class="card-body pt-0 px-0" wire:loading.remove>
                                     @foreach($items as $item)
-                                        <div class="summary card"
+                                        <div class="summary card hover:bg-gray-75"
                                              data-book="true"
                                              @if($item['database'] == 'cat03146a' && in_array($item['format'], ['Book', 'Map']))
                                                 data-bib="{{ explode('.', $item['an'])[1] }}"

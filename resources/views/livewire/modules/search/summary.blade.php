@@ -1,7 +1,7 @@
 <div>
 
 
-        <div class="card-body">
+        <div class="card-body pl-10">
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-1">
                     @if($display == 'search')
