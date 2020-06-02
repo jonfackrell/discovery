@@ -114,12 +114,11 @@
     </div>
 
     <div id="chat-button"
-         class="fixed bottom-0 right-0 mr-2 mb-2 p-2 text-red-600 border-red-600 bg-white border-solid border-2 h-16 w-16 rounded-full flex-shrink-0 cursor-pointer"
+         class="fixed bottom-0 right-0 mr-2 mb-2 p-2 text-byuired-100 border-byuired-100 bg-white border-solid border-2 h-16 w-16 rounded-full flex-shrink-0 cursor-pointer"
          title="Sorry, we are currently offline, but you can send us an email and we'll get back to you as soon as possible."
     >
-        <svg fill="currentColor" viewBox="0 0 20 20">
-            <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z"></path>
-            <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z"></path>
+        <svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+            <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
         </svg>
     </div>
 
@@ -194,18 +193,18 @@
             $.get("http://libraryh3lp.com/presence/jid/byuidahos-queue/chat.libraryh3lp.com/text", function(status){
                 var $button = $('#chat-button');
                 if(status == 'available'){
-                    $button.removeClass('text-red-600 border-red-600');
-                    $button.addClass('text-green-600 border-green-600');
+                    $button.removeClass('text-byuired-100 border-byuired-100');
+                    $button.addClass('text-byuigreen-100 border-byuigreen-100');
                     $button.attr('title', 'We\'re online and available to chat!');
-                    $button.find('svg').html('<path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>');
+                    $button.find('svg').html('<svg fill="currentColor" viewBox="0 0 20 20"><path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z"></path><path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z"></path></svg>');
                     $button.on('click', function () {
                         window.location = 'https://library-byui-edu.byui.idm.oclc.org/library-chat#url=' + location.href;
                     });
                 }else{
-                    $button.removeClass('text-green-600 border-green-600');
-                    $button.addClass('text-red-600 border-red-600');
+                    $button.removeClass('text-byuigreen-100 border-byuigreen-100');
+                    $button.addClass('text-byuired-100 border-byuired-100');
                     $button.attr('title', 'Sorry, we are currently offline, but you can send us an email and we\'ll get back to you as soon as possible.');
-                    $button.find('svg').html('<path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z"></path><path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z"></path>');
+                    $button.find('svg').html('<svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>');
                 }
             });
             if(window.updateChatTimeout > 60){
@@ -346,7 +345,7 @@
             window.chatStatusInterval = setInterval(function () {
                 updateChatStatus();
                 updateChatTimeout++;
-            }, 1000);
+            }, 120000);
             /*$(document).on('mouseenter', '.summary', function () {
                 var $resource = $(this);
                 if($resource.data('book') == true && $resource.find('.summary-container').data('loaded') == false){
