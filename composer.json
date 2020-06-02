@@ -21,6 +21,7 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
         "livewire/livewire": "^1.0",
+        "pusher/pusher-php-server": "^4.1",
         "rexlabs/enum": "^2.0",
         "spatie/laravel-schemaless-attributes": "^1.7"
     },

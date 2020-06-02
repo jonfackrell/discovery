@@ -25,7 +25,9 @@
                                 <span class="cursor-pointer align-middle mr-1" wire:click="$emit('setFormatFacet', '{{ $item['format'] }}')" title="Filter to {{ $item['format'] }}">{{ $item['format'] }}</span>|<span class="cursor-pointer align-middle ml-1" wire:click="$emit('setContentProviderFacet', '{{ $item['database_label'] }}')" title="Filter to {{ $item['database_label'] }}">{{ $item['database_label'] }}</span>
                             </div>
                             <h3 class="card-title text-xl capitalize font-bold">
-                                <a href="{{ $item['detail_link'] }}" class="meta title">{!! Str::of(html_entity_decode( $item['title'] ))->beforeLast(' / ')->replaceMatches('/\[electronic resource\]/', '') !!}</a>
+                                <a href="{{ $item['detail_link'] }}" class="meta title hover:text-black">
+                                    {!! Str::of(html_entity_decode( $item['title'] ))->beforeLast(' / ')->replaceMatches('/\[electronic resource\]/', '') !!}
+                                </a>
                             </h3>
                         </div>
                         <div class="col-md-2 lg:text-right">
@@ -81,7 +83,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <a href="{{ html_entity_decode( $item['full_text_link']['url'] ) }}"
-                                   class="btn btn-raspberry rounded-none"
+                                   class="@if($item['database'] == 'cat03146a' && in_array($item['format'], ['Book', 'Map'])) raspberry @else btn btn-raspberry rounded-none @endif"
                                    target="_blank"
                                 >
                                     {{ $item['full_text_link']['label'] }}

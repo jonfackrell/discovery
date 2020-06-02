@@ -22,7 +22,7 @@
     @stack('styles')
 
 </head>
-<body>
+<body class="bg-gray-50">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-dark bg-black shadow-sm sticky-top p-0">
             <div class="container">
@@ -148,7 +148,7 @@
                     @{{#unless due_at}}
                         @{{ status }}
                         <form class="remote-submit-pull-request-form" action="http://maclab.byui.edu/library/pull-request" method="GET" target="_blank" style="display: inline; margin-left: 16px;">
-                            <button type="submit" class="btn btn-dark btn-sm rounded-none remote-pull-button" title="Delivery / Pickup">Delivery / Pickup</button>
+                            <button type="submit" class="btn btn-raspberry btn-sm rounded-none remote-pull-button" title="Pickup / Delivery">Pickup / Delivery</button>
                             <input type="hidden" name="title" value="">
                             <input type="hidden" name="author" value="">
                             <input type="hidden" name="location" value="@{{ location }}">
@@ -158,6 +158,10 @@
                     @{{/unless}}
                     @{{#if due_at}}
                         Due: @{{ due_at }}
+                        <a href="https://byui.ent.sirsi.net/client/en_US/beta/search/detailnonmodal/ent:$002f$002fSD_ILS$002f0$002fSD_ILS:@{{ bib }}/ada?"
+                           class="btn btn-raspberry btn-sm rounded-none ml-4"
+                           target="_blank"
+                        >Place Hold</a>
                     @{{/if}}
                 </td>
             </tr>

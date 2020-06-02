@@ -18,12 +18,31 @@
     font-family: 'Open Sans',sans-serif;
 }
 
+.raspberry{
+    color: #A5216F;
+
+    &:hover{
+        color: #A5216F;
+        text-decoration: underline;
+    }
+}
+
 .btn-raspberry{
     background-color: #A5216F;
     color:#ffffff;
     font-family: 'Open Sans',sans-serif;
     font-weight: 400;
     letter-spacing: 1.5px;
+    text-transform: uppercase;
+
+    &:hover{
+        color: #ffffff;
+    }
+}
+
+.btn-sm.btn-raspberry{
+    font-family: 'Open Sans',sans-serif;
+    font-weight: 400;
     text-transform: uppercase;
 
     &:hover{

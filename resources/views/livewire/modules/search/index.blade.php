@@ -71,4 +71,12 @@
 
 </div>
 
+@push('scripts')
+    <script type="text/javascript">
+        window.livewire.hook('afterDomUpdate', function () {
+            $(document).scrollTop(0);
+        });
+    </script>
+@endpush
+
 

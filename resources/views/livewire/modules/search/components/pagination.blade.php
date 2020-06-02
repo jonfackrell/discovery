@@ -2,10 +2,17 @@
 
     <div class="results-count">
         @livewire('modules.search.bulk-action')
-        <span wire:loading.remove>Results: {{ $total }}</span>
+
     </div>
 
     <ul class="pagination">
+        @if(isset($page) && isset($count))
+            <span class="mr-4"
+                  wire:loading.remove
+            >
+                Showing {{ 1 + ($page-1)*$count  }} - {{ $count + ($page-1)*$count  }} of {{ number_format($total) }}
+            </span>
+        @endif
         @if(ceil(($total/25)) > 1)
             @if($page != 1)
                 <li class="page-item"><a class="page-link" wire:click="$set('page', {{ $page - 1 }})"><i class="fas fa-chevron-left"></i> Previous</a></li>

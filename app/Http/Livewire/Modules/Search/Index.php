@@ -77,7 +77,7 @@ class Index extends Component
         $this->type = request('type');
         $this->collection = request('collection');
         $this->language = request('language');
-        $this->count = request('count');
+        $this->count = request('count', 20);
         $this->term = request('term');
         $this->field = request('field');
         $this->term_2 = request('term_2');
