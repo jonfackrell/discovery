@@ -10,7 +10,9 @@
             <span class="mr-4"
                   wire:loading.remove
             >
-                Showing {{ 1 + ($page-1)*$count  }} - {{ $count + ($page-1)*$count  }} of {{ number_format($total) }}
+            @if($total > 0)
+                Showing {{ 1 + ($page-1)*$count  }} - {{ min(($count + ($page-1)*$count), $total)  }} of {{ number_format($total) }}
+            @endif
             </span>
         @endif
         @if(ceil(($total/25)) > 1)

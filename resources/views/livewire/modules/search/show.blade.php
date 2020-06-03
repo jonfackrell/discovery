@@ -68,16 +68,22 @@
                             Details
                         </h4>
                         @foreach($item->details as $detail)
-                                <div class="row @if($loop->odd) bg-gray-50 @endif p-2">
-                                    <div class="col-2">
-                                        <span class="font-bold">
-                                            {!! $detail['Label'] !!}
-                                        </span>
-                                    </div>
-                                    <div class="col-10">
-                                        {!! html_entity_decode($detail['Data']) !!}
-                                    </div>
+                            <div class="row @if($loop->odd) bg-gray-50 @endif p-2">
+                                <div class="col-2">
+                                    <span class="font-bold">
+                                        {!! $detail['Label'] !!}
+                                    </span>
                                 </div>
+                                <div class="col-10">
+                                    @if($detail['Label'] == 'Content Notes')
+                                        @foreach(explode(' -- ', $detail['Data']) as $data)
+                                            {!! html_entity_decode($data) !!}<br />
+                                        @endforeach
+                                    @else
+                                        {!! html_entity_decode($detail['Data']) !!}
+                                    @endif
+                                </div>
+                            </div>
                         @endforeach
                         {{--<h2>
                             Additional Item Details
@@ -248,3 +254,36 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+    <script type="text/javascript">
+        window.livewire.hook('afterDomUpdate', function () {
+            var $parent;
+            $('.details-container link').each(function (i, val) {
+                var $link = $(this);
+                $parent = $link.parent();
+                $link.replaceWith([
+                    '<a href=' + $link.attr('linkterm') + ' target=' + $link.attr('linkwindow') + '>',
+                    $link.parent().contents().filter(function(){
+                        return this.nodeType == 3;
+                    }).text().split('CLICK HERE for online access;')[i+1],
+                    '</a>'
+                ].join("\n"));
+            });
+            if($parent){
+                $parent.contents().filter(function(){
+                    return this.nodeType == 3;
+                }).remove();
+            }
+
+            $('.details-container searchlink').each(function (i, val) {
+                var $link = $(this);
+                $link.replaceWith([
+                    '<a class="hover:text-black" href={{ route('search') }}?mode=all&field=KW&term=' + $link.attr('fieldcode') + '%20' + $link.attr('term') + '>',
+                    $link.text(),
+                    '</a>'
+                ].join("\n"));
+            });
+        });
+    </script>
+@endpush
