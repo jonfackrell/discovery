@@ -263,7 +263,7 @@
                 var $link = $(this);
                 $parent = $link.parent();
                 $link.replaceWith([
-                    '<a href=' + $link.attr('linkterm') + ' target=' + $link.attr('linkwindow') + '>',
+                    '<a class="underline hover:text-black" href=' + $link.attr('linkterm') + ' target=' + $link.attr('linkwindow') + '>',
                     $link.parent().contents().filter(function(){
                         return this.nodeType == 3;
                     }).text().split('CLICK HERE for online access;')[i+1],
@@ -279,7 +279,7 @@
             $('.details-container searchlink').each(function (i, val) {
                 var $link = $(this);
                 $link.replaceWith([
-                    '<a class="hover:text-black" href={{ route('search') }}?mode=all&field=KW&term=' + $link.attr('fieldcode') + '%20' + $link.attr('term') + '>',
+                    '<a class="underline hover:text-black" href={{ route('search') }}?mode=all&field=KW&term=' + $link.attr('fieldcode') + '%20' + $link.attr('term') + '>',
                     $link.text(),
                     '</a>'
                 ].join("\n"));
