@@ -45,7 +45,7 @@
         @else
         <div class="facet-container">
             <div class="facet card border-0 mt-2">
-                <div class="card-header bg-gray-50 border-0 p-1 font-open-sans" id="facet_header_{{ $fkey }}">
+                <div class="card-header bg-gray-50 border-0 p-1 font-open-sans hover:bg-gray-75" id="facet_header_{{ $fkey }}">
                     <h2 class="mb-0">
                         <div class="text-lg toggle text-black font-open-sans @if(!$loop->first) collapsed @endif" type="button" data-toggle="collapse" data-target="#facet_collapse_{{ $fkey }}" aria-expanded="true" aria-controls="facet_collapse_{{ $fkey }}">
                             {{ $facet['name'] }}
