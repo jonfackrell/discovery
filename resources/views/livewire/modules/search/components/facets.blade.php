@@ -74,7 +74,7 @@
                                     </span>
                                     <span title="{{ $value['count'] }}"
                                           class="ml-auto inline-block py-0.5 pl-1 pr-1 leading-4 rounded-full bg-gray-50 group-focus:bg-gray-100 transition ease-in-out duration-150">
-                                      @if($value['count'] < 100000) ({{ $value['count'] }}) @else {{ '(+99,999)' }} @endif
+                                      @if($value['count'] < 100000) ({{ number_format( $value['count'] ) }}) @else {{ '(+99,999)' }} @endif
                                     </span>
                                 </div>
                             @endforeach
