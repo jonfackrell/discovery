@@ -57,7 +57,7 @@
                     <div class="card-body bg-gray-50 pt-0 px-0">
                         <nav>
                             @foreach($facet['values'] as $vkey => $value)
-                                <div class="group flex items-center px-3 py-1 leading-5 font-medium text-gray-900 rounded-md bg-gray-200 hover:text-black focus:outline-none focus:bg-gray-300 transition ease-in-out duration-150 cursor-pointer"
+                                <div class="group flex items-center px-3 py-1 -mb-1 leading-5 font-medium text-gray-900 rounded-md bg-gray-200 hover:text-black focus:outline-none focus:bg-gray-300 transition ease-in-out duration-150 cursor-pointer"
                                    aria-current="page">
                                     <input type="checkbox"
                                            id="{{ $facet['identifier'] }}_{{ $value['action'] }}"
@@ -106,19 +106,17 @@
                     </script>
                     <nav x-data="types">
                         <template x-for="type in types" :key="type">
-                            <div class="group flex items-center px-3 py-1 leading-5 font-medium text-gray-900 rounded-md bg-gray-200 hover:text-black focus:outline-none focus:bg-gray-300 transition ease-in-out duration-150 cursor-pointer"
+                            <div class="group flex items-center px-0 py-1 -mb-1 leading-5 font-medium text-gray-900 rounded-md bg-gray-200 hover:text-black focus:outline-none focus:bg-gray-300 transition ease-in-out duration-150 cursor-pointer"
                                  aria-current="page">
                                 <input type="checkbox"
                                        class="flex-shrink-0 -ml-1 mr-1 h-3 w-3 text-gray-500 group-hover:text-gray-500 group-focus:text-gray-600 transition ease-in-out duration-150">
-
                                 <span class="truncate">
-                                      <label for="">
-                                                            <span class="option">
-                                                                <span class="text"></span>
-                                                            </span>
-                                </label>
-                                    </span>
-
+                                    <label for="">
+                                        <span class="option">
+                                            <span class="text" style="width: 150px;"></span>
+                                        </span>
+                                    </label>
+                                </span>
                             </div>
                         </template>
                     </nav>

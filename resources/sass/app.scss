@@ -98,19 +98,22 @@ body{
         display: contents;
     }
 
-    .option{
-        display: inline-block;
-        margin-bottom: -6px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        text-transform: capitalize;
-        white-space: nowrap;
-        width: 170px;
+    .loading-placeholder{
+        .option{
+            display: inline-block;
+            margin-bottom: -6px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-transform: capitalize;
+            white-space: nowrap;
+            width: 170px;
+        }
+
+        .count{
+            float: right;
+        }
     }
 
-    .count{
-        float: right;
-    }
 }
 
 .results{
