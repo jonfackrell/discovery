@@ -5,7 +5,7 @@
         @if($loop->index == 1)
 
             <div class="facet card border-0 mt-2">
-                <div class="card-header bg-gray-50 border-0 p-1 font-open-sans" id="facet_header_{{ $fkey }}">
+                <div class="card-header bg-gray-50 border-0 p-1 font-open-sans hover:bg-gray-75" id="facet_header_{{ $fkey }}">
                     <h2 class="mb-0 text-black">
                         <div class="text-lg toggle" type="button" data-toggle="collapse" data-target="#date_range" aria-expanded="true" aria-controls="date_range">
                             Creation Date
