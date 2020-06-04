@@ -15,7 +15,7 @@
 
                 <div id="date_range" class="collapse show" aria-labelledby="date_range_header" data-parent="#facets">
                     <div class="card-body bg-gray-50 pt-0">
-                        <ul>
+                        <nav>
                             @foreach([
                                 null => 'All Years',
                                 1 => 'This Year',
@@ -23,16 +23,21 @@
                                 5 => 'Last 5 Years',
                                 10 => 'Last 10 Years',
                             ] as $vkey => $value)
-                                <li>
-                                    <input type="radio" id="date_range_{{ $vkey }}"  wire:model="period" value="{{ $vkey }}">
-                                    <label for="date_range_{{ $vkey }}">
-                                                        <span class="option">
-                                                            {{ $value }}
-                                                        </span>
-                                    </label>
-                                </li>
+
+                                <div class="group flex items-center px-3 py-1 leading-5 font-medium text-gray-900 rounded-md bg-gray-200 hover:text-black focus:outline-none focus:bg-gray-300 transition ease-in-out duration-150 cursor-pointer"
+                                     aria-current="page">
+                                    <input type="radio" id="date_range_{{ $vkey }}"  wire:model="period" value="{{ $vkey }}" class="flex-shrink-0 -ml-1 mr-1 h-3 w-3 text-gray-500 group-hover:text-gray-500 group-focus:text-gray-600 transition ease-in-out duration-150">
+                                    <span class="truncate">
+                                        <label for="date_range_{{ $vkey }}">
+                                            <span class="option">
+                                                {{ $value }}
+                                            </span>
+                                        </label>
+                                    </span>
+
+                                </div>
                             @endforeach
-                        </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -49,26 +54,30 @@
                 </div>
 
                 <div id="facet_collapse_{{ $fkey }}" class="collapse @if($loop->first) show @endif" aria-labelledby="facet_header_{{ $fkey }}" data-parent="#facets">
-                    <div class="card-body bg-gray-50 pt-0">
-                        <ul>
+                    <div class="card-body bg-gray-50 pt-0 px-0">
+                        <nav>
                             @foreach($facet['values'] as $vkey => $value)
-                                <li>
+                                <div class="group flex items-center px-3 py-1 leading-5 font-medium text-gray-900 rounded-md bg-gray-200 hover:text-black focus:outline-none focus:bg-gray-300 transition ease-in-out duration-150 cursor-pointer"
+                                   aria-current="page">
                                     <input type="checkbox"
                                            id="{{ $facet['identifier'] }}_{{ $value['action'] }}"
                                            wire:model="facet.{{ $facet['identifier'] }}.{{ $value['action'] }}"
                                            value="{{ $value['action'] }}"
+                                           class="flex-shrink-0 -ml-1 mr-1 h-3 w-3 text-gray-500 group-hover:text-gray-500 group-focus:text-gray-600 transition ease-in-out duration-150"
                                     >
-                                    <label for="{{ $facet['identifier'] }}_{{ $value['action'] }}">
+                                    <span class="truncate">
+                                      <label for="{{ $facet['identifier'] }}_{{ $value['action'] }}">
                                         <span class="option">
                                             {{ $value['name'] }}
                                         </span>
-                                        <span class="count">
-                                            ({{ $value['count'] }})
-                                        </span>
                                     </label>
-                                </li>
+                                    </span>
+                                    <span class="ml-auto inline-block py-0.5 pl-1 pr-1 leading-4 rounded-full bg-gray-50 group-focus:bg-gray-100 transition ease-in-out duration-150">
+                                      ({{ $value['count'] }})
+                                    </span>
+                                </div>
                             @endforeach
-                        </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -95,18 +104,24 @@
                     <script>
                         var types = [1,2,3,4,5,7,8,9,10];
                     </script>
-                    <ul x-data="types">
+                    <nav x-data="types">
                         <template x-for="type in types" :key="type">
-                            <li>
-                                <input type="checkbox">
-                                <label for="">
+                            <div class="group flex items-center px-3 py-1 leading-5 font-medium text-gray-900 rounded-md bg-gray-200 hover:text-black focus:outline-none focus:bg-gray-300 transition ease-in-out duration-150 cursor-pointer"
+                                 aria-current="page">
+                                <input type="checkbox"
+                                       class="flex-shrink-0 -ml-1 mr-1 h-3 w-3 text-gray-500 group-hover:text-gray-500 group-focus:text-gray-600 transition ease-in-out duration-150">
+
+                                <span class="truncate">
+                                      <label for="">
                                                             <span class="option">
                                                                 <span class="text"></span>
                                                             </span>
                                 </label>
-                            </li>
+                                    </span>
+
+                            </div>
                         </template>
-                    </ul>
+                    </nav>
                 </div>
             </div>
         </div>
@@ -121,7 +136,7 @@
 
             <div class="collapse show" aria-labelledby="date_range_header" data-parent="#facets">
                 <div class="card-body bg-gray-50 pt-0">
-                    <ul>
+                    <nav>
                         @foreach([
                             null => 'All Years',
                             1 => 'This Year',
@@ -129,17 +144,21 @@
                             5 => 'Last 5 Years',
                             10 => 'Last 10 Years',
                         ] as $vkey => $value)
-                            <li>
-                                <input type="radio" id="date_range_{{ $vkey }}"  wire:model="period" value="{{ $vkey }}">
-                                <label for="date_range_{{ $vkey }}">
-                                                            <span class="option">
-                                                                {{ $value }}
-                                                            </span>
-                                </label>
-                            </li>
+                            <div class="group flex items-center px-3 py-1 leading-5 font-medium text-gray-900 rounded-md bg-gray-200 hover:text-black focus:outline-none focus:bg-gray-300 transition ease-in-out duration-150 cursor-pointer"
+                                 aria-current="page">
+                                <input type="radio" id="date_range_{{ $vkey }}" value="{{ $vkey }}" class="flex-shrink-0 -ml-1 mr-1 h-3 w-3 text-gray-500 group-hover:text-gray-500 group-focus:text-gray-600 transition ease-in-out duration-150">
+                                <span class="truncate">
+                                        <label for="date_range_{{ $vkey }}">
+                                            <span class="option">
+                                                {{ $value }}
+                                            </span>
+                                        </label>
+                                    </span>
+
+                            </div>
                         @endforeach
 
-                    </ul>
+                    </nav>
                 </div>
             </div>
         </div>

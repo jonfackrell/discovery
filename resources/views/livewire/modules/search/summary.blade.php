@@ -22,7 +22,15 @@
                     <div class="row">
                         <div class="col-md-10">
                             <div class="mb-1 text-base uppercase">
-                                <span class="cursor-pointer align-middle mr-1" wire:click="$emit('setFormatFacet', '{{ $item['format'] }}')" title="Filter to {{ $item['format'] }}">{{ $item['format'] }}</span>|<span class="cursor-pointer align-middle ml-1" wire:click="$emit('setContentProviderFacet', '{{ $item['database_label'] }}')" title="Filter to {{ $item['database_label'] }}">{{ $item['database_label'] }}</span>
+                                <span class="cursor-pointer align-middle mr-1"
+                                      wire:click="$emit('setFormatFacet', '{{ $item['format'] }}')"
+                                      title="Filter to {{ Str::plural($item['format']) }}">{{ $item['format'] }}
+                                </span>
+                                |
+                                <span class="cursor-pointer align-middle ml-1"
+                                      wire:click="$emit('setContentProviderFacet', '{{ $item['database_label'] }}')"
+                                      title="Filter to {{ $item['database_label'] }}">{{ $item['database_label'] }}
+                                </span>
                             </div>
                             <h3 class="card-title text-xl capitalize font-bold">
                                 <a href="{{ $item['detail_link'] }}" class="meta title hover:text-black">
