@@ -363,7 +363,23 @@ div.floor{
     background-color: #1b9cd5;
 }
 
-
+.html-full-text{
+    p{
+        @apply my-2
+    }
+    anid{
+        display: none;
+    }
+    jsection{
+        display: none;
+    }
+    title{
+        display: none;
+    }
+    aug{
+        display: none;
+    }
+}
 
 
 

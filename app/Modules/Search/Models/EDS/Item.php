@@ -76,8 +76,14 @@ class Item extends \App\Item
         $info = null;
         if ($this->link_type == 'pdflink' || $this->link_type == 'ebook-epub' || $this->link_type == 'ebook-pdf') {
             return [
-                'label' => 'Full Text',
+                'label' => 'VIEW PDF',
                 'url' => route('item.fulltext', ['item' => 'EDS:' . $this->database . '|' . $this->an]),
+                'info' => $info,
+            ];
+        } elseif ($this->link_type == 'html'){
+            return [
+                'label' => 'VIEW HTML TEXT',
+                'url' => $this->detail_link,
                 'info' => $info,
             ];
         } elseif ($this->database == 'cat03146a') {
@@ -123,7 +129,11 @@ class Item extends \App\Item
     {
         $name = '';
         try {
-            $name = $this->record['FullText']['Links'][0]['Type'];
+            if(array_key_exists('Links', $this->record['FullText'])){
+                $name = $this->record['FullText']['Links'][0]['Type'];
+            }else if(array_key_exists('Text', $this->record['FullText'])){
+                $name = 'html';
+            }
         } catch (\Exception $e) {
         }
         return $name;
@@ -163,11 +173,21 @@ class Item extends \App\Item
         return $name;
     }
 
-    public function getPPermaLinkAttribute()
+    public function getPermaLinkAttribute()
     {
         $name = '';
         try {
             $name = $this->record['PLink'];
+        } catch (\Exception $e) {
+        }
+        return $name;
+    }
+
+    public function getFullTextAttribute()
+    {
+        $name = '';
+        try {
+            $name = $this->record['FullText']['Text']['Value'];
         } catch (\Exception $e) {
         }
         return $name;

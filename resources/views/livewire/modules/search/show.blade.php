@@ -62,6 +62,20 @@
                             </div>
                         </div>
                     @endif
+
+                    {{--@if(array_key_exists('Text', $item['FullText']))--}}
+                        <div class="card-body">
+                            <div class="details-container">
+                                <h4 class="font-bold text-xl mb-4">
+                                    HTML Full Text
+                                </h4>
+                                <div class="html-full-text mx-4">
+                                    {!! html_entity_decode($item->full_text) !!}
+                                </div>
+                            </div>
+                        </div>
+                    {{--@endif--}}
+
                     <div class="card-body">
                         <div class="details-container">
                         <h4 class="font-bold text-xl mb-2">
