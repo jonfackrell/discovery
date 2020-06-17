@@ -131,7 +131,7 @@ class Item extends \App\Item
         try {
             if(array_key_exists('Links', $this->record['FullText'])){
                 $name = $this->record['FullText']['Links'][0]['Type'];
-            }else if(array_key_exists('Text', $this->record['FullText']) && $this->record['FullText']['FullText']['Availability'] == 1){
+            }else if(array_key_exists('Text', $this->record['FullText']) && $this->record['FullText']['Text']['Availability'] == 1){
                 $name = 'html';
             }
         } catch (\Exception $e) {
