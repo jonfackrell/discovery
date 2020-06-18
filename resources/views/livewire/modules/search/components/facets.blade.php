@@ -1,5 +1,5 @@
-<div class="accordion sticky-top sticky-offset" id="facets" wire:loading.remove>
-
+<div class="accordion" id="facets" wire:loading.remove>
+    <!-- sticky-top sticky-offset-->
     @foreach($facets as $fkey => $facet)
 
         @if($loop->index == 1)

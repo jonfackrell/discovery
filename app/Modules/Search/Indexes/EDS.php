@@ -177,8 +177,11 @@ class EDS implements IndexInterface
         }
     }
 
-    public function citations($database, $an, $styles = ['apa', 'mla', 'chicago'])
+    public function citations($database, $an, $styles = null)
     {
+        if(is_null($styles)){
+            $styles = explode('|', setting('citation_styles'));
+        }
         $styles = implode(',', $styles);
 
         $response = Http::withHeaders($this->headers)->get(
