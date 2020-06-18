@@ -73,6 +73,18 @@
                                             Results per page
                                         </label>
                                     </div>
+                                    <br />
+                                    <input type="r"
+                                           name="citation_styles[]"
+                                           id="abnt"
+                                           value="abnt"
+                                           @if(in_array('abnt', explode('|', $user->options->citation_styles))) checked @endif
+                                    >
+                                    <label class="pt-1"
+                                           for="abnt">
+                                        ABNT
+                                    </label>
+                                    <br />
                                 </div>
                                 <div class="text-gray-700 bg-white px-4 py-2 m-2">
                                     <h3 class="font-bold text-lg mb-4 text-left">
