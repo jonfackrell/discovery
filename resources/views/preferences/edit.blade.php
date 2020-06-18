@@ -74,7 +74,7 @@
                                         </label>
                                     </div>
                                     <br />
-                                    <input type="r"
+                                    {{--<input type="checkbox"
                                            name="citation_styles[]"
                                            id="abnt"
                                            value="abnt"
@@ -84,7 +84,7 @@
                                            for="abnt">
                                         ABNT
                                     </label>
-                                    <br />
+                                    <br />--}}
                                 </div>
                                 <div class="text-gray-700 bg-white px-4 py-2 m-2">
                                     <h3 class="font-bold text-lg mb-4 text-left">
