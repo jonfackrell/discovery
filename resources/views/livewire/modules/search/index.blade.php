@@ -12,20 +12,19 @@
 
 
                 <div class="col-sm-12 col-md-2 bg-gray-50 pr-0 pt-2">
-
-                    @include('livewire.modules.search.components.facets')
-
+                    @if(! empty($term))
+                        @include('livewire.modules.search.components.facets')
+                    @endif
                 </div>
 
                 <div class="col-sm-12 col-md-10 pl-0">
 
                     <div class="results">
 
-                        <div class="">
-                            @include('livewire.modules.search.components.pagination')
-                        </div>
-
                         @if($items)
+                            <div class="">
+                                @include('livewire.modules.search.components.pagination')
+                            </div>
 
                             <div class="list card">
                                 <div class="card-body pt-0 px-0" wire:loading.remove>
@@ -54,7 +53,7 @@
                                 </div>
                             </div>
 
-                        @else
+                        @elseif(! empty($term))
                             <div class="list card">
                                 @include('livewire.modules.search.components.results-loading')
                             </div>

@@ -330,7 +330,7 @@ class EDS implements IndexInterface
             ],
             "RetrievalCriteria" => [
                 "View" => "detailed",
-                "ResultsPerPage" => 20,
+                "ResultsPerPage" => setting('count'),
                 "PageNumber" => $page,
                 "Highlight" => "y",
                 "IncludeImageQuickView" => "n"

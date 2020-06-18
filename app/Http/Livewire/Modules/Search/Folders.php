@@ -26,6 +26,7 @@ class Folders extends Component
     public $cite = false;
     public $citations = [];
     public $total = 0;
+    public $count;
     public $users = [];
 
     protected $listeners = [
@@ -89,6 +90,7 @@ class Folders extends Component
     {
         if ($this->readyToLoad) {
             $this->items = [];
+            $this->count = setting('count');
             $this->folders = auth()->user()->folders;
 
             $this->shares = auth()->user()->shares;
@@ -97,10 +99,10 @@ class Folders extends Component
                 $this->folder = Folder::with('folders')->where('id', $this->activeFolder)->first();
                 $folderItems = FolderItem::where('user_id', auth()->user()->id)
                                             ->whereIn('folder_id', array_merge([$this->activeFolder], $this->folder->folders->pluck('id')->all()))
-                                            ->paginate(25);
+                                            ->paginate($this->count);
                 $this->users = $this->folder->shares;
             } else {
-                $folderItems = FolderItem::where('user_id', auth()->user()->id)->paginate(25);
+                $folderItems = FolderItem::where('user_id', auth()->user()->id)->paginate($this->count);
             }
 
             foreach ($folderItems as $folderItem) {

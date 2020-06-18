@@ -75,12 +75,12 @@ class User extends Authenticatable
         return $this->belongsToMany(Folder::class, 'shared_folder');
     }
 
-    public function getExtraAttributesAttribute(): SchemalessAttributes
+    public function getOptionsAttribute(): SchemalessAttributes
     {
         return SchemalessAttributes::createForModel($this, 'options');
     }
 
-    public function scopeWithExtraAttributes(): Builder
+    public function scopeWithOptions(): Builder
     {
         return SchemalessAttributes::scopeWithSchemalessAttributes('options');
     }

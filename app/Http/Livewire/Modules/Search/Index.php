@@ -77,7 +77,7 @@ class Index extends Component
         $this->type = request('type');
         $this->collection = request('collection');
         $this->language = request('language');
-        $this->count = request('count', 20);
+        $this->count = request('count', setting('count'));
         $this->term = request('term');
         $this->field = request('field');
         $this->term_2 = request('term_2');
@@ -92,7 +92,7 @@ class Index extends Component
         $this->fullText = request('fullText')=='true'?:null;
         $this->peerReviewed = request('peerReviewed')=='true'?:null;
         $this->available = request('available')=='false'?:true;
-        $this->mode = request('mode', 'bool');
+        $this->mode = request('mode', setting('mode'));
         $this->thesaurus = request('thesaurus')=='true'?:null;
         $this->rel_subjects = request('rel_subjects')=='true'?:null;
     }

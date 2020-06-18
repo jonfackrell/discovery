@@ -20,3 +20,6 @@ Route::get('/', function () {
 Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/preferences', 'PreferencesController@index')->name('account.preferences');
+Route::post('/preferences', 'PreferencesController@update')->name('account.preferences.update');

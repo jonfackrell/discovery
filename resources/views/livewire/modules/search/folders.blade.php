@@ -61,7 +61,7 @@
                             <a class="nav-link text-lg text-black font-open-sans uppercase" href="#">Recently Viewed</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-lg text-black font-open-sans uppercase" href="#">Preferences</a>
+                            <a class="nav-link text-lg text-black font-open-sans uppercase" href="{{ route('account.preferences') }}">Preferences</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-lg text-black font-open-sans uppercase" href="#">Personal Info</a>
@@ -260,7 +260,6 @@
 
                                 <div class="results-count">
                                     @livewire('modules.search.bulk-action')
-                                    <span wire:loading.remove>Results: {{ $total }}</span>
                                 </div>
                                 {!! $pagination !!}
                             </nav>

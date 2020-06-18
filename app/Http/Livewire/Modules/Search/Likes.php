@@ -9,15 +9,17 @@ class Likes extends Component
     public $items = [];
     public $readyToLoad = false;
     public $total = 0;
+    public $count;
 
     public function render()
     {
         if ($this->readyToLoad) {
-            $likes = auth()->user()->likes;
+            $this->count = setting('count');
+            $likes = auth()->user()->likes()->paginate($this->count);
             foreach ($likes as $like) {
                 $this->items[] = (new \App\Modules\Search\Models\EDS\Item())->setRecord($like->data);
             }
-            $this->total = count($this->items);
+            $this->total = $likes->total();
         } else {
             $this->items = [];
         }
