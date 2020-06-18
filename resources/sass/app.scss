@@ -381,8 +381,19 @@ div.floor{
     }
 }
 
+.subject-links a{
+    background-color: #a0aec0;
+    border-radius: 0.125rem;
+    color: #ffffff;
+    font-size: 12px;
+    margin-right: 0.5rem;
+    padding: 0.25rem 0.5rem;
 
-
+    &:hover{
+        background-color: #718096;
+        text-decoration: none;
+    }
+}
 
 @import 'custom';
 

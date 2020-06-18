@@ -64,6 +64,7 @@ class Item extends \App\Item
         'link_type',
         'full_text_link',
         'thumbnail',
+        'subject',
     ];
 
     public function getDetailLinkAttribute()
@@ -408,6 +409,26 @@ class Item extends \App\Item
         $author = '';
         try {
             $author = collect($this->record['RecordInfo']['BibRecord']['BibEntity']['Subjects'])->pluck('SubjectFull');
+        } catch (\Exception $e) {
+        }
+        return $author;
+    }
+
+    public function getSubjectAttribute()
+    {
+        $author = '';
+        try {
+            $author = collect($this->record['Items'])->where('Name', 'Subject')->first()['Data'];
+        } catch (\Exception $e) {
+        }
+        return $author;
+    }
+
+    public function getCompanySubjectAttribute()
+    {
+        $author = '';
+        try {
+            $author = collect($this->record['Items'])->where('Name', 'SubjectCompany')->first()['Data'];
         } catch (\Exception $e) {
         }
         return $author;

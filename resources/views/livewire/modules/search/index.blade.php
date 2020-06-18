@@ -73,7 +73,14 @@
 @push('scripts')
     <script type="text/javascript">
         window.livewire.hook('afterDomUpdate', function () {
-            $(document).scrollTop(0);
+            $('.subject-links searchlink').each(function (i, val) {
+                var $link = $(this);
+                $link.replaceWith([
+                    '<a class="subject-links" href={{ route('search') }}?mode=all&field=KW&term=' + $link.attr('fieldcode') + '%20' + $link.attr('term') + '>',
+                    $link.text().trim(';'),
+                    '</a>'
+                ].join("\n"));
+            });
         });
     </script>
 @endpush

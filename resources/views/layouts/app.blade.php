@@ -72,7 +72,7 @@
                                     <a class="dropdown-item" href="{{ route('account.folders') }}">
                                         Folders
                                     </a>
-                                    <a class="dropdown-item" href="">
+                                    <a class="dropdown-item" href="{{ route('account.preferences') }}">
                                         Preferences
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
@@ -296,6 +296,10 @@
         window.livewire.on('folderShared', function(){
             $('.share-folder-select').prop('disabled', false);
             $('#share-folder-submit').prop('disabled', false);
+        });
+
+        window.livewire.on('scrollToTop', function(){
+            $(document).scrollTop(0);
         });
 
         window.livewire.on('initInvite', function(){

@@ -8,25 +8,7 @@
             <div class="col-sm-12 col-md-2 bg-gray-50 pr-0 pt-2">
 
                 <div class="ml-1">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link text-lg text-black font-open-sans uppercase" href="{{ route('account.likes') }}">Liked</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-lg text-black font-open-sans uppercase" href="{{ route('account.folders') }}">Folders</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-lg text-black font-open-sans uppercase" href="#">Recently Viewed</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-lg text-black font-open-sans uppercase" href="{{ route('account.preferences') }}">Preferences</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-lg text-black font-open-sans uppercase" href="#">Personal Info</a>
-                        </li>
-                    </ul>
-
-
+                    @include('Search::account.sidebar')
                 </div>
 
             </div>

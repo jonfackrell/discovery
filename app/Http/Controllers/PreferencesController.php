@@ -31,6 +31,7 @@ class PreferencesController extends Controller
         $user->options->set([
             'mode' => $request->get('mode'),
             'count' =>  $request->get('count'),
+            'display' =>  $request->get('display'),
             'citation_styles' => implode('|', $request->get('citation_styles')),
         ]);
         $user->save();

@@ -83,9 +83,18 @@
                     @if($item['publication_date'])
                         / {{ $item['publication_date'] }}
                     @endif
-                    <p class="card-text mt-2">
-                        {!! \Illuminate\Support\Str::limit(html_entity_decode($item['abstract']), 800, '...') !!}
-                    </p>
+
+                    @if(in_array(setting('display'), ['standard', 'expanded']))
+                        <p class="card-text mt-2">
+                            {!! \Illuminate\Support\Str::limit(html_entity_decode($item['abstract']), 800, '...') !!}
+                        </p>
+                    @endif
+
+                    @if(in_array(setting('display'), ['expanded']))
+                        <div class="subject-links text-white">
+                            {!! Str::of(html_entity_decode($item['subject']))->replace(';', '')->replace('<br />', '') !!}
+                        </div>
+                    @endif
 
                     <div class="card-text my-2">
                         <div class="row">

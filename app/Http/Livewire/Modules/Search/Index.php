@@ -136,6 +136,7 @@ class Index extends Component
             $this->searchIndexes();
 
             $this->emit('resetSelectAll');
+            $this->emit('scrollToTop');
 
             /* if(env('CACHE_RESULTS') == true){
                  session(['search_results' => base64_encode(url()->full())]);

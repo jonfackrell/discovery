@@ -11,25 +11,7 @@
             <div class="col-sm-12 col-md-2 bg-gray-50 pr-0 pt-2">
 
                 <div class="ml-1">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link text-lg text-black font-open-sans uppercase" href="{{ route('account.likes') }}">Liked</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-lg text-black font-open-sans uppercase" href="{{ route('account.folders') }}">Folders</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-lg text-black font-open-sans uppercase" href="#">Recently Viewed</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-lg text-black font-open-sans uppercase" href="{{ route('account.preferences') }}">Preferences</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-lg text-black font-open-sans uppercase" href="#">Personal Info</a>
-                        </li>
-                    </ul>
-
-
+                    @include('Search::account.sidebar')
                 </div>
 
             </div>
@@ -57,7 +39,7 @@
                         <div class="card-body pt-0 pr-0 bg-gray-75">
 
                             <div class="flex flex-row">
-                                <div class="text-gray-700 text-center bg-white px-4 py-2 m-2">
+                                <div class="text-gray-700 bg-white px-4 py-2 m-2">
                                     <h3 class="font-bold text-lg mb-4 text-left">
                                         Display
                                     </h3>
@@ -74,17 +56,38 @@
                                         </label>
                                     </div>
                                     <br />
-                                    {{--<input type="checkbox"
-                                           name="citation_styles[]"
-                                           id="abnt"
-                                           value="abnt"
-                                           @if(in_array('abnt', explode('|', $user->options->citation_styles))) checked @endif
+                                    <input type="radio"
+                                           name="display"
+                                           id="brief"
+                                           value="brief"
+                                           @if(setting('display') == 'brief') checked @endif
                                     >
                                     <label class="pt-1"
-                                           for="abnt">
-                                        ABNT
+                                           for="brief">
+                                        Brief
                                     </label>
-                                    <br />--}}
+                                    <br />
+                                    <input type="radio"
+                                           name="display"
+                                           id="standard"
+                                           value="standard"
+                                           @if(setting('display') == 'standard') checked @endif
+                                    >
+                                    <label class="pt-1"
+                                           for="standard">
+                                        Standard
+                                    </label>
+                                    <br />
+                                    <input type="radio"
+                                           name="display"
+                                           id="expanded"
+                                           value="expanded"
+                                           @if(setting('display') == 'expanded') checked @endif
+                                    >
+                                    <label class="pt-1"
+                                           for="expanded">
+                                        Expanded
+                                    </label>
                                 </div>
                                 <div class="text-gray-700 bg-white px-4 py-2 m-2">
                                     <h3 class="font-bold text-lg mb-4 text-left">
