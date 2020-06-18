@@ -195,9 +195,14 @@
 
                                                 <div class="input-group mb-3">
                                                     <select class="form-control rounded-none" name="format" aria-describedby="generate-references">
+                                                        <option value="abnt" @if($format == 'abnt') selected @endif>ABNT</option>
+                                                        <option value="ama" @if($format == 'ama') selected @endif>AMA</option>
                                                         <option value="apa" @if($format == 'apa') selected @endif>APA</option>
-                                                        <option value="chicago" @if($format == 'chicago') selected @endif>Chicago</option>
+                                                        <option value="chicago" @if($format == 'chicago') selected @endif>Chicago/Turabian: Author-Date</option>
+                                                        <option value="harvard" @if($format == 'harvard') selected @endif>Harvard</option>
                                                         <option value="mla" @if($format == 'mla') selected @endif>MLA</option>
+                                                        <option value="turabian" @if($format == 'turabian') selected @endif>Chicago/Turabian: Humanities</option>
+                                                        <option value="vancouver" @if($format == 'vancouver') selected @endif>Vancouver/ICMJE</option>
                                                     </select>
                                                     <div class="input-group-append" id="generate-references">
                                                         <button class="btn btn-outline-secondary rounded-none" type="submit" id="share-folder-submit">
@@ -206,8 +211,6 @@
                                                     </div>
                                                 </div>
                                                 <!-- TODO: Add select option for citation style -->
-
-
 
                                             </form>
                                         </div>

@@ -80,6 +80,28 @@
                                     </h3>
                                     <input type="checkbox"
                                            name="citation_styles[]"
+                                           id="abnt"
+                                           value="abnt"
+                                            @if(in_array('abnt', explode('|', $user->options->citation_styles))) checked @endif
+                                    >
+                                    <label class="pt-1"
+                                           for="abnt">
+                                        ABNT
+                                    </label>
+                                    <br />
+                                    <input type="checkbox"
+                                           name="citation_styles[]"
+                                           id="ama"
+                                           value="ama"
+                                            @if(in_array('ama', explode('|', $user->options->citation_styles))) checked @endif
+                                    >
+                                    <label class="pt-1"
+                                           for="ama">
+                                        AMA
+                                    </label>
+                                    <br />
+                                    <input type="checkbox"
+                                           name="citation_styles[]"
                                            id="apa"
                                            value="apa"
                                             @if(in_array('apa', explode('|', $user->options->citation_styles))) checked @endif
@@ -97,7 +119,18 @@
                                     >
                                     <label class="pt-1"
                                            for="chicago">
-                                        Chicago
+                                        Chicago/Turabian: Author-Date
+                                    </label>
+                                    <br />
+                                    <input type="checkbox"
+                                           name="citation_styles[]"
+                                           id="harvard"
+                                           value="harvard"
+                                           @if(in_array('harvard', explode('|', $user->options->citation_styles))) checked @endif
+                                    >
+                                    <label class="pt-1"
+                                           for="harvard">
+                                        Harvard
                                     </label>
                                     <br />
                                     <input type="checkbox"
@@ -109,6 +142,28 @@
                                     <label class="pt-1"
                                            for="mla">
                                         MLA
+                                    </label>
+                                    <br />
+                                    <input type="checkbox"
+                                           name="citation_styles[]"
+                                           id="turabian"
+                                           value="turabian"
+                                           @if(in_array('turabian', explode('|', $user->options->citation_styles))) checked @endif
+                                    >
+                                    <label class="pt-1"
+                                           for="turabian">
+                                        Chicago/Turabian: Humanities
+                                    </label>
+                                    <br />
+                                    <input type="checkbox"
+                                           name="citation_styles[]"
+                                           id="vancouver"
+                                           value="vancouver"
+                                           @if(in_array('vancouver', explode('|', $user->options->citation_styles))) checked @endif
+                                    >
+                                    <label class="pt-1"
+                                           for="vancouver">
+                                        Vancouver/ICMJE
                                     </label>
                                 </div>
                             </div>
