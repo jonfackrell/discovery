@@ -332,7 +332,7 @@ class EDS implements IndexInterface
 
             ],
             "RetrievalCriteria" => [
-                "View" => "detailed",
+                "View" => (in_array(setting('display'), ['standard', 'expanded']))?'detailed':'brief',
                 "ResultsPerPage" => setting('count'),
                 "PageNumber" => $page,
                 "Highlight" => "y",
