@@ -20,7 +20,7 @@
                     >
                         <img src="{{ $item['thumbnail'] }}"
                              class="img-fluid shadow"
-                             alt="View Detail for {{ Str::of(strip_tags( html_entity_decode( $item['title'] ) ) )->beforeLast(' / ')->replaceMatches('/\[electronic resource\]/', '') }}"
+                             aria-label="View Detail for {{ Str::of(strip_tags( html_entity_decode( $item['title'] ) ) )->beforeLast(' / ')->replaceMatches('/\[electronic resource\]/', '') }}"
                              style="background:url({{ \App\Enums\Thumbnail::keyForName(\Illuminate\Support\Str::of($item['format'])->replace('/', '')->snake()) }}); background-size: cover; width: 100%; max-width: 98px; height: auto; min-height: 98px;"
                         >
                     </a>
