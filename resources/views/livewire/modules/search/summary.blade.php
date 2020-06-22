@@ -5,7 +5,9 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-1">
                     @if($display == 'search')
+                        <label for="{{ $item['index'] }}:{{ $item['database'] }}:{{ $item['an'] }}" class="sr-only"></label>
                         <input type="checkbox"
+                               id="{{ $item['index'] }}:{{ $item['database'] }}:{{ $item['an'] }}"
                                class="resource-selection"
                                value="{{ $item['index'] }}:{{ $item['database'] }}:{{ $item['an'] }}"
                                data-index="{{ $item['index'] }}"
@@ -14,8 +16,10 @@
                                wire:click="$emit('select', $event.target.checked,'{{ $item['index'] }}', '{{ $item['database'] }}', '{{ $item['an'] }}')"
                         />
                     @endif
-                    <a href="{{ $item['detail_link'] }}" class="">
-                        <img src="{{ $item['thumbnail'] }}" class="img-fluid shadow" alt="" style="background:url({{ \App\Enums\Thumbnail::keyForName(\Illuminate\Support\Str::of($item['format'])->replace('/', '')->snake()) }}); background-size: cover; width: 100%; max-width: 98px; height: auto; min-height: 98px;">
+                    <a href="{{ $item['detail_link'] }}"
+                       class=""
+                    >
+                        <img src="{{ $item['thumbnail'] }}" class="img-fluid shadow" alt="View Detail for {{ Str::of(html_entity_decode( $item['title'] ))->beforeLast(' / ')->replaceMatches('/\[electronic resource\]/', '') }}" style="background:url({{ \App\Enums\Thumbnail::keyForName(\Illuminate\Support\Str::of($item['format'])->replace('/', '')->snake()) }}); background-size: cover; width: 100%; max-width: 98px; height: auto; min-height: 98px;">
                     </a>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xl-11">

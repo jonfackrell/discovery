@@ -18,6 +18,7 @@ class CreateIndicesTable extends Migration
             $table->string('name');
             $table->string('auth_token')->nullable();
             $table->datetime('auth_token_expires_at')->nullable();
+            $table->json('info')->nullable();
             $table->timestamps();
         });
     }

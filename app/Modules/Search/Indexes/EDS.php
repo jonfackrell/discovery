@@ -164,10 +164,17 @@ class EDS implements IndexInterface
 
     public function info()
     {
+        if($info = Index::where('name', 'EDS')->first()->info){
+            return $info;
+        }
+
         $response = Http::withHeaders($this->headers)->get($this->baseUri . 'edsapi/rest/Info');
 
         if ($response->ok()) {
-            return $response->json();
+            $index = Index::where('name', 'EDS')->first();
+            $index->info = $response->json();
+            $index->save();
+            return $index->info;
         } elseif ($response->status() == 400) {
             session()->forget('session_token');
             $this->getSessionToken();
