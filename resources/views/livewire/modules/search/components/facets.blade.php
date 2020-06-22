@@ -144,11 +144,11 @@
                             <div class="group flex items-center px-3 py-1 leading-5 font-medium text-gray-900 rounded-md bg-gray-200 hover:text-black focus:outline-none focus:bg-gray-300 transition ease-in-out duration-150 cursor-pointer"
                                  aria-current="page">
                                 <input type="radio"
-                                       id="date_range_{{ $vkey }}"
+                                       id="placeholder_date_range_{{ $vkey }}"
                                        value="{{ $vkey }}"
                                        class="flex-shrink-0 -ml-1 mr-1 h-3 w-3 text-gray-500 group-hover:text-gray-500 group-focus:text-gray-600 transition ease-in-out duration-150">
                                 <span class="truncate">
-                                        <label for="date_range_{{ $vkey }}">
+                                        <label for="placeholder_date_range_{{ $vkey }}">
                                             <span class="option">
                                                 {{ $value }}
                                             </span>
