@@ -66,11 +66,11 @@
                                            class="flex-shrink-0 -ml-1 mr-1 h-3 w-3 text-gray-500 group-hover:text-gray-500 group-focus:text-gray-600 transition ease-in-out duration-150"
                                     >
                                     <span class="truncate">
-                                      <label for="{{ Str::of($facet['identifier'] . '_' . $value['action'])->slug() }}">
-                                        <span class="option">
-                                            {{ $value['name'] }}
-                                        </span>
-                                    </label>
+                                        <label for="{{ Str::of($facet['identifier'] . '_' . $value['action'])->slug() }}">
+                                            <span class="option">
+                                                {{ $value['name'] }}
+                                            </span>
+                                        </label>
                                     </span>
                                     <span title="{{ number_format( $value['count'] ) }}"
                                           class="ml-auto inline-block py-0.5 pl-1 pr-1 leading-4 rounded-full bg-gray-50 group-focus:bg-gray-100 transition ease-in-out duration-150">
@@ -102,24 +102,22 @@
 
             <div class="collapse show" aria-labelledby="date_range_header" data-parent="#facets">
                 <div class="card-body bg-gray-50 pt-0">
-                    <script>
-                        var types = [1,2,3,4,5,7,8,9,10];
-                    </script>
-                    <nav x-data="types">
-                        <template x-for="type in types" :key="type">
+                    <nav>
+                        @foreach(range(1,10) as $typePlaceholder)
                             <div class="group flex items-center px-0 py-1 -mb-1 leading-5 font-medium text-gray-900 rounded-md bg-gray-200 hover:text-black focus:outline-none focus:bg-gray-300 transition ease-in-out duration-150 cursor-pointer"
                                  aria-current="page">
                                 <input type="checkbox"
+                                       id="source-type-placeholder-{{ $typePlaceholder }}"
                                        class="flex-shrink-0 -ml-1 mr-1 h-3 w-3 text-gray-500 group-hover:text-gray-500 group-focus:text-gray-600 transition ease-in-out duration-150">
                                 <span class="truncate">
-                                    <label for="">
+                                    <label for="source-type-placeholder-{{ $typePlaceholder }}">
                                         <span class="option">
                                             <span class="text" style="width: 150px;"></span>
                                         </span>
                                     </label>
                                 </span>
                             </div>
-                        </template>
+                        @endforeach
                     </nav>
                 </div>
             </div>
@@ -137,7 +135,7 @@
                 <div class="card-body bg-gray-50 pt-0">
                     <nav>
                         @foreach([
-                            null => 'All Years',
+                            0 => 'All Years',
                             1 => 'This Year',
                             2 => 'Last 2 Years',
                             5 => 'Last 5 Years',
@@ -145,7 +143,10 @@
                         ] as $vkey => $value)
                             <div class="group flex items-center px-3 py-1 leading-5 font-medium text-gray-900 rounded-md bg-gray-200 hover:text-black focus:outline-none focus:bg-gray-300 transition ease-in-out duration-150 cursor-pointer"
                                  aria-current="page">
-                                <input type="radio" id="date_range_{{ $vkey }}" value="{{ $vkey }}" class="flex-shrink-0 -ml-1 mr-1 h-3 w-3 text-gray-500 group-hover:text-gray-500 group-focus:text-gray-600 transition ease-in-out duration-150">
+                                <input type="radio"
+                                       id="date_range_{{ $vkey }}"
+                                       value="{{ $vkey }}"
+                                       class="flex-shrink-0 -ml-1 mr-1 h-3 w-3 text-gray-500 group-hover:text-gray-500 group-focus:text-gray-600 transition ease-in-out duration-150">
                                 <span class="truncate">
                                         <label for="date_range_{{ $vkey }}">
                                             <span class="option">
