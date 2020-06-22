@@ -1,5 +1,10 @@
 <div class="inline-block">
-    <input type="checkbox" class="all-resource-selection" onclick="selectAll(this)"/>
+    <label for="all-resource-selection" class="sr-only">Select all visible resources</label>
+    <input type="checkbox"
+           id="all-resource-selection"
+           class="all-resource-selection"
+           onclick="selectAll(this)"
+    />
     @if($selected)
         <div class="inline-block">
             {{ count($selected) }}

@@ -6,7 +6,9 @@
                     <select class="custom-select rounded-none"
                             id="field"
                             name="field"
-                            style="height: 3.1rem">
+                            style="height: 3.1rem"
+                            aria-label="Select field search type"
+                    >
                         <option value="AU" @if($field == 'AU') selected @endif>Author</option>
                         <option value="KW"  @if($field == 'KW' || empty($field)) selected @endif>Keyword</option>
                         <option value="TI" @if($field == 'TI') selected @endif>Title</option>
