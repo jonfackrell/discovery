@@ -15,15 +15,15 @@
                                wire:click="$emit('select', $event.target.checked,'{{ $item['index'] }}', '{{ $item['database'] }}', '{{ $item['an'] }}')"
                         />
                     @endif
-                    <a href="{{ $item['detail_link'] }}"
+                    {{--<a href="{{ $item['detail_link'] }}"
                        class=""
-                    >
+                    >--}}
                         <img src="{{ $item['thumbnail'] }}"
                              class="img-fluid shadow"
-                             aria-label="View Detail for {{ Str::of(strip_tags( html_entity_decode( $item['title'] ) ) )->beforeLast(' / ')->replaceMatches('/\[electronic resource\]/', '') }}"
+                             alt=""
                              style="background:url({{ \App\Enums\Thumbnail::keyForName(\Illuminate\Support\Str::of($item['format'])->replace('/', '')->snake()) }}); background-size: cover; width: 100%; max-width: 98px; height: auto; min-height: 98px;"
                         >
-                    </a>
+                    {{--</a>--}}
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xl-11">
                     <div class="row">
