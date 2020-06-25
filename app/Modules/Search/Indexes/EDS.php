@@ -164,9 +164,9 @@ class EDS implements IndexInterface
 
     public function info()
     {
-        if($info = Index::where('name', 'EDS')->first()->info){
+        /*if($info = Index::where('name', 'EDS')->first()->info){
             return $info;
-        }
+        }*/
 
         $response = Http::withHeaders($this->headers)->get($this->baseUri . 'edsapi/rest/Info');
 
