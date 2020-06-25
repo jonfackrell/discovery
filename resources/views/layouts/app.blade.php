@@ -30,7 +30,7 @@
                     <a class="navbar-brand m-0" href="http://www.byui.edu">
                         <img id="byui-logo" src="https://library.byui.edu/img/byui-logo-white.png" class="d-inline-block align-top" style="height: 60px; width: 72px;" alt="BYU-Idaho Home">
                     </a>
-                    <a class="navbar-brand m-0" href="/" style="">
+                    <a class="navbar-brand m-0" href="{{ route('search') }}" style="">
                         <img id="mckay-library-logo" src="https://library.byui.edu/img/mckay-library-logo-white.png" class="d-inline-block align-top" style="height: 60px; width: 245px;" alt="David O. McKay Library Home">
                     </a>
                 </span>
