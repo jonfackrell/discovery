@@ -172,7 +172,7 @@ class EDS implements IndexInterface
 
         if ($response->ok()) {
             return $response->json();
-            
+
             /*
             $index = Index::where('name', 'EDS')->first();
             $index->info = $response->json();

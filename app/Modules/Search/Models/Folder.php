@@ -24,6 +24,11 @@ class Folder extends Model
         'uuid' => EfficientUuid::class,
     ];
 
+    public function items()
+    {
+        return $this->hasMany(Item::class);
+    }
+
     public function folders()
     {
         return $this->hasMany(Folder::class);
@@ -32,6 +37,15 @@ class Folder extends Model
     public function subFolders()
     {
         return $this->hasMany(Folder::class)->with('folders');
+    }
+
+    static function allSubFolders($folder)
+    {
+        $folders[] = $folder;
+        foreach($folder->folders as $folder){
+            $folders = array_merge($folders, Folder::allSubFolders($folder));
+        }
+        return $folders;
     }
 
     public function getShareableLinkAttribute()

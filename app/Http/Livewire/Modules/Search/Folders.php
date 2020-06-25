@@ -100,7 +100,7 @@ class Folders extends Component
             if ($this->activeFolder) {
                 $this->folder = Folder::with('folders')->where('id', $this->activeFolder)->first();
                 $folderItems = FolderItem::where('user_id', auth()->user()->id)
-                                            ->whereIn('folder_id', array_merge([$this->activeFolder], $this->folder->folders->pluck('id')->all()))
+                                            ->whereIn('folder_id', array_merge([$this->activeFolder], collect(Folder::allSubFolders($this->folder))->pluck('id')->all()))
                                             ->paginate($this->count);
                 $this->users = $this->folder->shares;
             } else {
@@ -165,9 +165,14 @@ class Folders extends Component
     }
 
     public function changeOwnership($data)
-    {
-        $this->folder->user_id = $data['user'];
-        $this->folder->save();
+    {      
+        FolderItem::where('folder_id', $this->folder->id)->update(['user_id' => $data['user']]);
+
+        foreach(Folder::allSubFolders($this->folder) as $folder){
+            $folder->user_id = $data['user'];
+            $folder->save();
+            FolderItem::where('folder_id', $folder->id)->update(['user_id' => $data['user']]);
+        }
 
         $this->invite = false;
         $this->activeFolder = null;
