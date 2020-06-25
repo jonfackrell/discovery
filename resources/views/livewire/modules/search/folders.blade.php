@@ -111,7 +111,7 @@
 
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary rounded-none" type="submit" id="change-ownership-submit">
-                                                    Change Owner
+                                                    CHANGE OWNER
                                                 </button>
                                             </div>
                                         </div>
