@@ -316,6 +316,19 @@
                 }
 
             });
+            $('.change-ownership-select').select2({
+                delay: 750,
+                ajax: {
+                    url: '{{ route('user.search') }}',
+                    dataType: 'json',
+                    processResults: function (data) {
+                        return {
+                            results: data
+                        };
+                    }
+                }
+
+            });
         });
 
         document.addEventListener("livewire:load", function(event) {
