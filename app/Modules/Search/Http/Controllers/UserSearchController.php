@@ -14,7 +14,7 @@ class UserSearchController extends Controller
      */
     public function __invoke(Request $request)
     {
-        if (strlen($request->get('q')) < 6) {
+        if (strlen($request->get('q')) < 4) {
             return [];
         }
         return User::select('id', 'name', 'email')

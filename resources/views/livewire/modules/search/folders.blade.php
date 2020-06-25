@@ -93,6 +93,33 @@
 
                             </div>
                         </div>
+
+                            <div class="card m-2">
+                            <div class="card-header text-lg">
+                                Change Ownership
+                            </div>
+                            <div class="card-body">
+
+                                <div class="card-text w-full">
+                                    <form class="w-full share-folder-form" wire:submit.prevent="$emit('changeOwnership', Object.fromEntries(new FormData($event.target)))">
+                                        <label for="user" aria-hidden="true">Search Users</label>
+                                        <div class="input-group mb-3 rounded-none w-full" wire:ignore>
+
+                                            <select class="form-control share-folder-select rounded-none w-full" id="user" name="user">
+
+                                            </select>
+
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-secondary rounded-none" type="submit" id="share-folder-submit">
+                                                    Change Owner
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
                         </div>
                     @elseif($settings)
                         <div style="margin-top: 55px;">

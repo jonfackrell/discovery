@@ -304,7 +304,7 @@
 
         window.livewire.on('initInvite', function(){
             $('.share-folder-select').select2({
-                delay: 500,
+                delay: 750,
                 ajax: {
                     url: '{{ route('user.search') }}',
                     dataType: 'json',

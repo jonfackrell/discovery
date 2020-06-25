@@ -37,6 +37,7 @@ class Folders extends Component
         'shareFolderWithUser',
         'unShareFolderWithUser',
         'delete',
+        'changeOwnership',
     ];
 
     public function shareFolderWithUser($data)
@@ -161,5 +162,16 @@ class Folders extends Component
         $this->activeFolder = null;
 
         return redirect()->to('/folders');
+    }
+
+    public function changeOwnership($data)
+    {
+        $this->folder->user_id = $data['user'];
+        $this->folder->save();
+
+        $this->invite = false;
+        $this->activeFolder = null;
+        $this->folder = null;
+
     }
 }
