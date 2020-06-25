@@ -165,7 +165,7 @@ class Folders extends Component
     }
 
     public function changeOwnership($data)
-    {      
+    {
         FolderItem::where('folder_id', $this->folder->id)->update(['user_id' => $data['user']]);
 
         foreach(Folder::allSubFolders($this->folder) as $folder){

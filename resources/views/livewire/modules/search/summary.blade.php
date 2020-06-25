@@ -47,8 +47,8 @@
                         </div>
                         <div class="col-md-2 lg:text-right">
                             <i class="fas fa-heart cursor-pointer mr-2 cursor-pointer"
-                               style="@if($item['liked']) color: red;@endif"
-                               wire:click="toggleLike('{{ $item['index'] }}', '{{ $item['database'] }}', '{{ $item['an'] }}')"
+                               style="@if($item['liked']) color: red; @endif"
+                               wire:click.debounce.500ms="toggleLike('{{ $item['index'] }}', '{{ $item['database'] }}', '{{ $item['an'] }}')"
                             ></i>
 
                             @livewire('modules.search.folder-dropdown', ['index' => $item['index'], 'database' => $item['database'], 'an' => $item['an']], key($item['an']))

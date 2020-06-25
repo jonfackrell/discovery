@@ -50,12 +50,12 @@ class Summary extends Component
 
     public function toggleLike($index, $database, $an)
     {
-        if (Like::where('user_id', auth()->user()->id)
+        if (Like::where('user_id', user()->id)
             ->where('index', $this->item['index'])
             ->where('database', $this->item['database'])
             ->where('an', $this->item['an'])
             ->first()) {
-            Like::where('user_id', auth()->user()->id)
+            Like::where('user_id', user()->id)
                 ->where('index', $this->item['index'])
                 ->where('database', $this->item['database'])
                 ->where('an', $this->item['an'])
