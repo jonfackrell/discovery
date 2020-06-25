@@ -36,6 +36,7 @@ class Folders extends Component
         'generateReferences',
         'shareFolderWithUser',
         'unShareFolderWithUser',
+        'delete',
     ];
 
     public function shareFolderWithUser($data)
@@ -151,5 +152,14 @@ class Folders extends Component
         $this->invite = false;
         $this->settings = false;
         $this->cite = $this->cite?false:true;
+    }
+
+    public function delete()
+    {
+        $this->folder->delete();
+        $this->folder = null;
+        $this->activeFolder = null;
+
+        return redirect()->to('/folders');
     }
 }

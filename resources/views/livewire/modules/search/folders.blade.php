@@ -109,7 +109,7 @@
                                             I'm not sure what goes here:
                                             <ul>
                                                 <li>Public for Librarians</li>
-                                                <li>Delete</li>
+
                                                 <li>Move</li>
                                             </ul>
                                         </div>
@@ -235,11 +235,15 @@
                                                wire:click="$emitSelf('toggleSettings', true)"
                                                title="Folder Options"
                                             ></i>
+                                            <i class="fas fa-ellipsis-v" class="btn btn-secondary dropdown-toggle" type="button" id="tools" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                                            <div class="dropdown-menu rounded-none dropdown-menu-right" aria-labelledby="tools">
+                                            <span class="dropdown-item cursor-pointer"
+                                                  wire:click="$emitSelf('delete')"
+                                            >
+                                                Delete
+                                            </span>
+                                            </div>
                                         @endif
-                                        <i class="fas fa-ellipsis-v" class="btn btn-secondary dropdown-toggle" type="button" id="tools" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-                                        <div class="dropdown-menu rounded-none dropdown-menu-right" aria-labelledby="tools">
-
-                                        </div>
                                     </div>
                                 </h2>
                             </div>
