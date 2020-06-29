@@ -133,12 +133,30 @@
                                     <form class="w-full" wire:submit.prevent="$emit('updateSettings', Object.fromEntries(new FormData($event.target)))">
 
                                         <div>
-                                            I'm not sure what goes here:
-                                            <ul>
-                                                <li>Public for Librarians</li>
-
-                                                <li>Move</li>
-                                            </ul>
+                                            <label class="pt-1"
+                                                   for="parent">
+                                                Parent Folder
+                                            </label>
+                                            <select class="form-control rounded-none w-full" id="parent" name="parent">
+                                                <option value="0">-- Select Folder --</option>
+                                                @foreach($folders as $f)
+                                                    {{--<option value="{{ $f->id }}" @if($folder->folder_id == $f->id) selected @endif >{{ $f->name }}</option>--}}
+                                                    @include('livewire.modules.search.sub-folder-option', ['sub_folder' => $f])
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <br />
+                                        <div>
+                                            <input type="checkbox"
+                                                   name="public"
+                                                   id="public"
+                                                   value="1"
+                                                   @if(setting('public') == 1) checked @endif
+                                            >
+                                            <label class="pt-1"
+                                                   for="public">
+                                                Make this folder publicly searchable
+                                            </label>
                                         </div>
 
                                         <button class="btn btn-outline-secondary rounded-none" type="submit" id="share-folder-submit">

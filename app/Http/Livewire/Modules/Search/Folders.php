@@ -36,6 +36,7 @@ class Folders extends Component
         'generateReferences',
         'shareFolderWithUser',
         'unShareFolderWithUser',
+        'updateSettings',
         'delete',
         'changeOwnership',
     ];
@@ -64,7 +65,7 @@ class Folders extends Component
     {
         $citations = collect([]);
         $this->format = $data['format'];
-        $folderItems = FolderItem::where('user_id', auth()->user()->id)
+        $folderItems = FolderItem::where('user_id', user()->id)
                     ->whereIn('folder_id', array_merge([$this->activeFolder], $this->folder->folders->pluck('id')->all()))
                     ->get();
 
@@ -93,18 +94,18 @@ class Folders extends Component
         if ($this->readyToLoad) {
             $this->items = [];
             $this->count = setting('count');
-            $this->folders = auth()->user()->folders;
+            $this->folders = user()->folders;
 
-            $this->shares = auth()->user()->shares;
+            $this->shares = user()->shares;
 
             if ($this->activeFolder) {
                 $this->folder = Folder::with('folders')->where('id', $this->activeFolder)->first();
-                $folderItems = FolderItem::where('user_id', auth()->user()->id)
+                $folderItems = FolderItem::where('user_id', user()->id)
                                             ->whereIn('folder_id', array_merge([$this->activeFolder], collect(Folder::allSubFolders($this->folder))->pluck('id')->all()))
                                             ->paginate($this->count);
                 $this->users = $this->folder->shares;
             } else {
-                $folderItems = FolderItem::where('user_id', auth()->user()->id)->paginate($this->count);
+                $folderItems = FolderItem::where('user_id', user()->id)->paginate($this->count);
             }
 
             foreach ($folderItems as $folderItem) {
@@ -178,5 +179,14 @@ class Folders extends Component
         $this->activeFolder = null;
         $this->folder = null;
 
+    }
+
+    public function updateSettings($data)
+    {
+        $this->folder->folder_id = ( $data['parent'] > 0 ) ? $data['parent'] : null;
+        $this->folder->public = (! empty($data['public']) ) ? $data['public'] : 0;
+        $this->folder->save();
+
+        $this->settings = false;
     }
 }

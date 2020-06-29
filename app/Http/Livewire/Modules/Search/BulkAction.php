@@ -58,7 +58,7 @@ class BulkAction extends Component
 
     public function folderCreated($data)
     {
-        $folder = Folder::create(['name' => $data['folder_name'], 'user_id' => auth()->user()->id]);
+        $folder = Folder::create(['name' => $data['folder_name'], 'user_id' => user()->id]);
         //auth()->user()->folders()->save($folder);
         $this->folders[] = $folder->toArray();
 
@@ -83,13 +83,13 @@ class BulkAction extends Component
     public function toggleFolder($folder)
     {
         foreach ($this->selected as $item) {
-            if (FolderItem::where('user_id', auth()->user()->id)
+            if (FolderItem::where('user_id', user()->id)
                 ->where('index', $item['index'])
                 ->where('database', $item['database'])
                 ->where('an', $item['an'])
                 ->where('folder_id', $folder)
                 ->first()) {
-                FolderItem::where('user_id', auth()->user()->id)
+                FolderItem::where('user_id', user()->id)
                     ->where('index', $item['index'])
                     ->where('database', $item['database'])
                     ->where('an', $item['an'])

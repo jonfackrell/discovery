@@ -3,11 +3,7 @@
 @section('content')
     <iframe src="{{ $url }}" class="border-none h-full float-left" style="width: calc(100% - 40px);"></iframe>
     <div class="h-full float-left text-center" style="width: 40px;">
-        <i class="fas fa-heart cursor-pointer cursor-pointer mt-2 p-2"
-           style="@if($item['liked']) color: red;@endif"
-           wire:click="toggleLike('{{ $item->index }}', '{{ $item->database }}', '{{ $item->an }}')"
-        ></i>
-        <br />
+        @livewire( 'modules.search.like', ['index' => $item->index, 'database' => $item->database, 'an' => $item->an], key($item->an) )
         <div class="pl-2">
             @livewire('modules.search.folder-dropdown', ['index' => $item->index, 'database' => $item->database, 'an' => $item->an], key($item->an))
         </div>

@@ -35,7 +35,7 @@ class Summary extends Component
 
     public function render()
     {
-        $this->item['liked'] = Like::where('user_id', 1)
+        $this->item['liked'] = Like::where('user_id', user()->id)
                                     ->where('index', $this->item['index'])
                                     ->where('database', $this->item['database'])
                                     ->where('an', $this->item['an'])
