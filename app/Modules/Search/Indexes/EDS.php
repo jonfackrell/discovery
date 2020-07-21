@@ -173,11 +173,11 @@ class EDS implements IndexInterface
         if ($response->ok()) {
             return $response->json();
 
-            /*
-            $index = Index::where('name', 'EDS')->first();
-            $index->info = $response->json();
-            $index->save();
-            return $index->info;*/
+        /*
+        $index = Index::where('name', 'EDS')->first();
+        $index->info = $response->json();
+        $index->save();
+        return $index->info;*/
         } elseif ($response->status() == 400) {
             session()->forget('session_token');
             $this->getSessionToken();
@@ -189,7 +189,7 @@ class EDS implements IndexInterface
 
     public function citations($database, $an, $styles = null)
     {
-        if(is_null($styles)){
+        if (is_null($styles)) {
             $styles = explode('|', setting('citation_styles'));
         }
         $styles = implode(',', $styles);

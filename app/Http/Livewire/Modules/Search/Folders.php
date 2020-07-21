@@ -169,7 +169,7 @@ class Folders extends Component
     {
         FolderItem::where('folder_id', $this->folder->id)->update(['user_id' => $data['user']]);
 
-        foreach(Folder::allSubFolders($this->folder) as $folder){
+        foreach (Folder::allSubFolders($this->folder) as $folder) {
             $folder->user_id = $data['user'];
             $folder->save();
             FolderItem::where('folder_id', $folder->id)->update(['user_id' => $data['user']]);
@@ -178,13 +178,12 @@ class Folders extends Component
         $this->invite = false;
         $this->activeFolder = null;
         $this->folder = null;
-
     }
 
     public function updateSettings($data)
     {
-        $this->folder->folder_id = ( $data['parent'] > 0 ) ? $data['parent'] : null;
-        $this->folder->public = (! empty($data['public']) ) ? $data['public'] : 0;
+        $this->folder->folder_id = ($data['parent'] > 0) ? $data['parent'] : null;
+        $this->folder->public = (! empty($data['public'])) ? $data['public'] : 0;
         $this->folder->save();
 
         $this->settings = false;
