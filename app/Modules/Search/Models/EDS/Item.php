@@ -81,7 +81,7 @@ class Item extends \App\Item
                 'url' => route('item.fulltext', ['item' => 'EDS:' . $this->database . '|' . $this->an]),
                 'info' => $info,
             ];
-        } elseif ($this->link_type == 'html'){
+        } elseif ($this->link_type == 'html') {
             return [
                 'label' => 'VIEW HTML TEXT',
                 'url' => $this->detail_link,
@@ -130,9 +130,9 @@ class Item extends \App\Item
     {
         $name = '';
         try {
-            if(array_key_exists('Links', $this->record['FullText'])){
+            if (array_key_exists('Links', $this->record['FullText'])) {
                 $name = $this->record['FullText']['Links'][0]['Type'];
-            }else if(array_key_exists('Text', $this->record['FullText']) && $this->record['FullText']['Text']['Availability'] == 1){
+            } elseif (array_key_exists('Text', $this->record['FullText']) && $this->record['FullText']['Text']['Availability'] == 1) {
                 $name = 'html';
             }
         } catch (\Exception $e) {
@@ -168,7 +168,7 @@ class Item extends \App\Item
     {
         $name = '';
         try {
-            $name = Str::replaceFirst('http://', 'https://', $this->record['FullText']['Links'][0]['Url'] );
+            $name = Str::replaceFirst('http://', 'https://', $this->record['FullText']['Links'][0]['Url']);
         } catch (\Exception $e) {
         }
         return $name;

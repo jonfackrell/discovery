@@ -9,8 +9,6 @@ use Livewire\Component;
 
 class FullText extends Component
 {
-
-
     public function mount()
     {
         list($this->index, $this->itemId) = explode(':', request('item'));

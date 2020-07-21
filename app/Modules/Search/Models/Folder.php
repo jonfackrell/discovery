@@ -39,10 +39,10 @@ class Folder extends Model
         return $this->hasMany(Folder::class)->with('folders');
     }
 
-    static function allSubFolders($folder)
+    public static function allSubFolders($folder)
     {
         $folders[] = $folder;
-        foreach($folder->folders as $folder){
+        foreach ($folder->folders as $folder) {
             $folders = array_merge($folders, Folder::allSubFolders($folder));
         }
         return $folders;
