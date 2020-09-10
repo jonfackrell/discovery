@@ -13,13 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
 
 Auth::routes(['register' => false]);
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/preferences', 'PreferencesController@index')->name('account.preferences');
-Route::post('/preferences', 'PreferencesController@update')->name('account.preferences.update');

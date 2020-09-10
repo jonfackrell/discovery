@@ -3,12 +3,11 @@
 namespace App\Modules\Search\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-
+use App\Modules\Search\Indexes\EDS;
 use App\Modules\Search\Models\EDS\Item;
 use Illuminate\Http\Request;
-use JonFackrell\Eds\Facades\EbscoDiscovery;
 
-class FulltextController extends Controller
+class LinkController extends Controller
 {
     /**
      * Show search results.
@@ -17,13 +16,10 @@ class FulltextController extends Controller
      */
     public function __invoke(Request $request, $database, $an)
     {
-        //$index = new EDS();
-        $record = EbscoDiscovery::retrieve("$database|$an");
+        $index = new EDS();
+        $record = $index->retrieve("$database|$an");
         $item = (new Item())->setRecord($record);
 
-        return view('Search::embed', [
-            'item' => $item,
-            'url' => $item->pdf_link,
-        ]);
+        return redirect()->to($item->full_text_link['url']);
     }
 }

@@ -12,6 +12,7 @@
     <!-- Fonts -->
 
 
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="https://kit.fontawesome.com/7fab6ddd2f.js" crossorigin="anonymous"></script>
@@ -22,7 +23,24 @@
 
 </head>
 <body>
-    <div id="app">
+    <div id="app"
+         x-data="{
+            mobileMenu: false,
+            account: false,
+            mobileNav: false,
+            SourceType: true,
+            CreationDate: true,
+            SubjectEDS: false,
+            Publisher: false,
+            Journal: false,
+            Language: false,
+            SubjectGeographic: false,
+            Category: false,
+            LocationLibrary: false,
+            CollectionLibrary: false,
+            ContentProvider: false,
+        }"
+    >
 
         @include('Search::layouts.partials.top-nav')
 
@@ -37,7 +55,6 @@
     @livewireScripts
 
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>
 

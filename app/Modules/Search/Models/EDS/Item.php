@@ -2,11 +2,12 @@
 
 namespace App\Modules\Search\Models\EDS;
 
+use App\Modules\Search\Models\Like;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
-class Item extends \App\Item
+class Item extends \App\Modules\Search\Models\Item
 {
     protected $record;
 
@@ -28,7 +29,11 @@ class Item extends \App\Item
      * @var array
      */
     protected $fillable = [
-        'index', 'relevancy', 'name', 'author',
+        'index',
+        'relevancy',
+        'name',
+        'title',
+        'author',
     ];
 
     /**
@@ -60,16 +65,18 @@ class Item extends \App\Item
         'publication_date',
         'publication',
         'abstract',
-        'detail_link',
+        //'detail_link',
         'link_type',
         'full_text_link',
         'thumbnail',
         'subject',
+        'liked',
     ];
 
     public function getDetailLinkAttribute()
     {
-        return route('item.view', ['item' => 'EDS:' . $this->database . '|' . $this->an]);
+        //return route('item.view', ['item' => 'EDS:' . $this->database . '|' . $this->an]);
+        return route('search', ['database' => $this->database, 'an' => $this->an]);
     }
 
     public function getFullTextLinkAttribute()
@@ -78,7 +85,7 @@ class Item extends \App\Item
         if ($this->link_type == 'pdflink' || $this->link_type == 'ebook-epub' || $this->link_type == 'ebook-pdf') {
             return [
                 'label' => 'VIEW PDF',
-                'url' => route('item.fulltext', ['item' => 'EDS:' . $this->database . '|' . $this->an]),
+                'url' => route('item.fulltext', ['database' => $this->database, 'an' => $this->an]),
                 'info' => $info,
             ];
         } elseif ($this->link_type == 'html') {
@@ -243,7 +250,9 @@ class Item extends \App\Item
     {
         $name = '';
         try {
-            $name = collect($this->record['Items'])->where('Name', 'Title')->first()['Data'];
+            $name = (string) Str::of( html_entity_decode( collect($this->record['Items'])->where('Name', 'Title')->first()['Data'] ))
+                            ->beforeLast(' / ')
+                            ->replaceMatches('/\[electronic resource\]/', '');
         } catch (\Exception $e) {
         }
         return $name;
@@ -253,7 +262,9 @@ class Item extends \App\Item
     {
         $author = '';
         try {
-            $author = collect($this->record['Items'])->where('Name', 'Author')->first()['Data'];
+            $author = (string) Str::of( html_entity_decode( collect($this->record['Items'])->where('Name', 'Author')->first()['Data'] ) )
+                            ->replaceMatches('/<br \/>/', '; ')
+                            ->title();
         } catch (\Exception $e) {
         }
         return $author;
@@ -284,7 +295,7 @@ class Item extends \App\Item
     {
         $author = '';
         try {
-            $author = collect($this->record['Items'])->where('Name', 'Abstract')->first()['Data'];
+            $author = html_entity_decode(collect($this->record['Items'])->where('Name', 'Abstract')->first()['Data']);
         } catch (\Exception $e) {
         }
         return $author;
@@ -484,5 +495,16 @@ class Item extends \App\Item
             $author = "notfound";
         }
         return $author;
+    }
+
+    public function getLikedAttribute()
+    {
+        if(auth()->check()){
+            return Like::where('user_id', user()->id)
+                            ->where('database', $this->database)
+                            ->where('an', $this->an)
+                            ->first();
+        }
+        return false;
     }
 }

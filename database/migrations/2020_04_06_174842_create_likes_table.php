@@ -16,7 +16,6 @@ class CreateLikesTable extends Migration
         Schema::create('likes', function (Blueprint $table) {
             $table->id('id');
             $table->unsignedBigInteger('user_id');
-            $table->string('index')->index();
             $table->string('database')->index();
             $table->string('an')->index();
             $table->json('data')->nullable();
@@ -27,7 +26,7 @@ class CreateLikesTable extends Migration
                 ->on('users')
                 ->onDelete('cascade');
 
-            $table->index(['user_id', 'index', 'database', 'an']);
+            $table->index(['user_id', 'database', 'an']);
         });
     }
 

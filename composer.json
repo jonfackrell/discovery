@@ -15,8 +15,9 @@
         "dyrynda/laravel-model-uuid": "^6.1",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
-        "guzzlehttp/guzzle": "^6.3",
+        "guzzlehttp/guzzle": "^7.0",
         "jan-drda/laravel-google-custom-search-engine": "^1.0",
+        "jonfackrell/ebsco-discovery-api-sdk": "dev-master",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
@@ -74,5 +75,11 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ]
-    }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../ebsco-discovery-api-sdk"
+        }
+    ]
 }

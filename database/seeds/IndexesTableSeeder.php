@@ -11,7 +11,7 @@ class IndexesTableSeeder extends Seeder
      */
     public function run()
     {
-        $index = new \App\Index();
+        $index = new \App\Modules\Search\Models\Index();
         $index->name = 'EDS';
         $index->save();
     }

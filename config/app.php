@@ -167,9 +167,9 @@ return [
          */
 
         App\Modules\Search\Providers\SearchServiceProvider::class,
-        App\Modules\Stackmaps\Providers\StackmapServiceProvider::class,
+        //App\Modules\Stackmaps\Providers\StackmapServiceProvider::class,
         Dyrynda\Database\LaravelEfficientUuidServiceProvider::class,
-        JanDrda\LaravelGoogleCustomSearchEngine\LaravelGoogleCustomSearchEngineProvider::class,
+        //JanDrda\LaravelGoogleCustomSearchEngine\LaravelGoogleCustomSearchEngineProvider::class,
 
         /*
          * Application Service Providers...

@@ -37,7 +37,6 @@ class CreateFoldersTable extends Migration
             $table->id('id');
             $table->unsignedBigInteger('user_id')->index();
             $table->unsignedBigInteger('folder_id')->index();
-            $table->string('index')->index();
             $table->string('database')->index();
             $table->string('an')->index();
             $table->json('data')->nullable();

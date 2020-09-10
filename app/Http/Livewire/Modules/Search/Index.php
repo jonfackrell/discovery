@@ -3,245 +3,161 @@
 namespace App\Http\Livewire\Modules\Search;
 
 use App\Enums\Thumbnail;
+use App\Modules\Search\Indexes\EDS;
 use App\Modules\Search\Indexes\Manager;
+use App\Modules\Search\Models\EDS\Item;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use JonFackrell\Eds\Facades\EbscoDiscovery;
 use Livewire\Component;
 
 class Index extends Component
 {
-    public $advanced = false;
-    public $info = [];
-    public $term = '';
-    public $field = null;
-    public $term_2 = '';
-    public $field_2 = null;
-    public $term_3 = '';
-    public $field_3 = null;
-    public $page = 1;
-    public $facet = [];
-    public $period = null;
-    public $from = null;
-    public $to = null;
-    public $items = [];
-    public $facets = [];
-    public $readyToLoad = false;
-    public $fullText = false;
-    public $peerReviewed = false;
-    public $available = true;
-    public $total = 0;
-    public $type = null;
-    public $collection = null;
-    public $language = null;
-    public $count = null;
-    public $mode = null;
-    public $thesaurus = null;
-    public $rel_subjects = null;
+    public $an;
+    public $database;
 
-    private $noSearchingRequired;
+    public $info;
+    public $facet = [];
+    public $facets = [];
+    public $items = [];
+    public $total = 0;
+    public $period = null;
+
+    public $SourceType = [];
+    public $CreationDate = [];
+    public $SubjectEDS = [];
+    public $Publisher = [];
+    public $Publication = [];
+    public $Language = [];
+    public $SubjectGeographic = [];
+    public $Category = [];
+    public $Location = [];
+    public $Collection = [];
+    public $ContentProvider = [];
+
+    public $advanced = false;
+    public $term = null;
+    public $field = null;
 
     protected $updatesQueryString = [
-        'advanced',
+        'an',
+        'database',
         'term',
         'field',
-        'term_2',
-        'field_2',
-        'term_3',
-        'field_3',
-        'facet',
         'period',
-        'from',
-        'to',
-        'fullText',
-        'peerReviewed',
-        'available',
-        'page',
-        'type',
-        'collection',
-        'language',
-        'count',
-        'mode',
-        'thesaurus',
-        'rel_subjects',
-        ];
+        'facet',
+        'SourceType',
+        'CreationDate',
+        'SubjectEDS',
+        'Publisher',
+        'Publication',
+        'Language',
+        'SubjectGeographic',
+        'Category',
+        'Location',
+        'Collection',
+        'ContentProvider',
+    ];
 
     protected $listeners = [
-        'setFormatFacet',
-        'setContentProviderFacet',
-        'toggleAvancedSearch',
-        ];
+        'show',
+    ];
 
     public function mount()
     {
-        $this->advanced = request('advanced');
-        $this->type = request('type');
-        $this->collection = request('collection');
-        $this->language = request('language');
-        $this->count = request('count', setting('count'));
-        $this->term = request('term');
-        $this->field = request('field');
-        $this->term_2 = request('term_2');
-        $this->field_2 = request('field_2');
-        $this->term_3 = request('term_3');
-        $this->field_3 = request('field_3');
-        $this->page = request('page', 1);
-        $this->facet = request('facet', []);
-        $this->period = request('period');
-        $this->from = request('from');
-        $this->to = request('to');
-        $this->fullText = request('fullText')=='true'?:null;
-        $this->peerReviewed = request('peerReviewed')=='true'?:null;
-        $this->available = request('available')=='false'?:true;
-        $this->mode = request('mode', setting('mode'));
-        $this->thesaurus = request('thesaurus')=='true'?:null;
-        $this->rel_subjects = request('rel_subjects')=='true'?:null;
-    }
+        $this->an = request('an');
+        $this->database = request('database');
 
-    public function loadResults()
-    {
-        $this->readyToLoad = true;
-    }
+        $this->getInfo();
 
-    public function updatingFacet($value)
-    {
-        $this->page = 1;
+        if(! empty(request('term'))){
+            $request = new Request();
+            $request->replace(request()->all());
+            $this->getCriteria($request);
+        }
     }
-
-    /*public function updatingFullText($value)
-    {
-        $this->facet = [];
-    }
-
-    public function updatingPeerReviewed($value)
-    {
-        $this->facet = [];
-    }
-
-    public function updatingAvailable($value)
-    {
-        $this->facet = [];
-    }*/
 
     public function render()
     {
-        if ($this->noSearchingRequired) {
-            $this->noSearchingRequired = false;
-        } elseif ($this->readyToLoad && $this->hasTerm()) {
-            /*if(env('CACHE_RESULTS') == true && session('search_results') == base64_encode()){
-                $items = session('items');
-                $facets = session('facets');
-                $this->items = $items;
-                $this->facets = $facets;
-            }else{*/
-            $this->searchIndexes();
-
-            $this->emit('resetSelectAll');
-            $this->emit('scrollToTop');
-
-            /* if(env('CACHE_RESULTS') == true){
-                 session(['search_results' => base64_encode(url()->full())]);
-                 session(['items' => $this->items]);
-                 session(['facets' => $this->facets]);
-             }
-
-            }*/
+        // TODO: This is where we could check a config setting to open the item in a full page or a sidebar.
+        if(! empty($this->an)){
+            $index = new EDS();
+            $record = $index->retrieve("$this->database|$this->an");
+            $item = (new Item())->setRecord($record);
+            return view('Search::partials.show', [
+                'item' => $item,
+            ]);
         }
 
-        if ($this->advanced) {
-            if (session('info')) {
-                $this->info = session('info');
-            } else {
-                $this->info = Manager::get('EDS')->info();
-                session(['info' => $this->info]);
-            }
-        }
+        $this->searchIndex();
 
-        return view('livewire.modules.search.index');
+        return view('Search::partials.results');
     }
 
     public function search($data)
     {
-        $this->facet = [];
-        $this->facets = [];
-        $this->emit('clearFacets');
-        $this->page = 1;
-        foreach ($data as $key => $value) {
-            $this->{$key} = $value;
-        }
-        if ($this->thesaurus == 'false') {
-            $this->thesaurus = null;
-        }
-        if ($this->rel_subjects == 'false') {
-            $this->rel_subjects = null;
-        }
+
+        $request = new Request();
+        $request->replace($data);
+        $this->getCriteria($request);
     }
 
-    public function searchIndexes()
+    public function show($database, $an)
     {
-        // get all managers
-        // Loop through managers to get search results
-        // combine search results
-        $indexes = collect([]);
-        $results = collect([]);
-        $facets = collect([]);
-        $this->items = [];
-        $this->total = 0;
+        if('detail' && auth()->guest()){
+            return redirect()->route('login');
+        }
 
-        $appliedFacets = [];
-        $id = 1;
-        foreach ($this->facet as $fskey => $fs) {
-            foreach ($fs as $fkey => $f) {
-                if ($f == 'true' || $f == true) {
-                    $appliedFacets[] = "$fskey:$fkey";
-                    $id++;
-                } else {
-                    $this->facet[$fskey][$fkey] = null;
-                }
+        $this->database = $database;
+        $this->an = $an;
+    }
+
+    public function searchIndex()
+    {
+        if(empty($this->term)){
+           return;
+        }
+
+        $facets = [];
+
+        foreach($this->getFacets() as $facet){
+            foreach($this->{$facet} as $value){
+                $facets[] = "$facet:$value";
             }
         }
-        //dd($appliedFacets);
-        $total = 0;
-        foreach (['EDS'] as $index) {
-            $result = Manager::get($index)->search($this->term, [
-                'field' => $this->field,
-                'facets' => $appliedFacets,
-                'period' => $this->getPeriod(),
-                'peerReviewed' => $this->peerReviewed,
-                'fullText' => $this->fullText,
-                'available' => $this->available,
-                'page' => $this->page,
-                'queries' => [
-                    [
-                        'operation' => 'AND',
-                        'tag' => $this->field_2,
-                        'term' => $this->term_2,
-                    ],
-                    [
-                        'operation' => 'AND',
-                        'tag' => $this->field_3,
-                        'term' => $this->term_3,
-                    ],
-                ],
-                'type' => $this->type,
-                'collection' => $this->collection,
-                'language' => $this->language,
-                'count' => $this->count,
-                'mode' => $this->mode,
-                'thesaurus' => $this->thesaurus,
-                'rel_subjects' => $this->rel_subjects,
-            ]);
-            $indexes = $indexes->push($result);
-            $results = $results->merge($result['records']);
-            $facets = $facets->merge($result['facets']);
-            $total += $result['stats']['total'];
+
+        $index = new EDS();
+        $result = $index->search($this->term, [
+            'field' => $this->field,
+            'period' => $this->getPeriod(),
+            'facets' => $facets,
+            'language' => 'English',
+            'mode' => 'bool',
+            'rel_subjects' => true,
+            'thesaurus' => true,
+            'type' => null,
+        ]);
+
+        $this->facets = collect($result['facets'])->all();
+        $this->items = $result['records']->all();
+        $this->total = $result['stats']['total'];
+    }
+
+    public function getInfo()
+    {
+        $this->info = EbscoDiscovery::info();
+    }
+
+    public function getCriteria(Request $request)
+    {
+        foreach($request->all() as $key => $value){
+            if(! empty($value)){
+                $this->{$key} = $value;
+            }else{
+                $this->{$key} = null;
+            }
         }
-        $this->total = $total;
-        // TODO: process other elements such as facets
-        foreach ($results->sortByDesc('relevancy') as $key => $item) {
-            $this->items[] = $item;
-        }
-        $this->facets = $facets->all();
-        return $this->items;
     }
 
     public function getPeriod()
@@ -256,30 +172,9 @@ class Index extends Component
         }
     }
 
-    public function hasTerm()
+    public function getFacets()
     {
-        return !is_null($this->term) && strlen($this->term) > 2;
+        return explode('|', env('FACETS'));
     }
 
-    public function setFormatFacet($format)
-    {
-        $this->page = 1;
-        if ($format == 'Dissertation/ Thesis') {
-            $this->facet['SourceType'][Str::plural('Dissertation')] = true;
-        } else {
-            $this->facet['SourceType'][Str::plural($format)] = true;
-        }
-    }
-
-    public function setContentProviderFacet($format)
-    {
-        $this->page = 1;
-        $this->facet['ContentProvider'][$format] = true;
-    }
-
-    public function toggleAvancedSearch()
-    {
-        $this->advanced = $this->advanced?false:true;
-        $this->noSearchingRequired = true;
-    }
 }

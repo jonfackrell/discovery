@@ -2,13 +2,14 @@
 
 namespace App\Http\Livewire\Modules\Search;
 
+use App\Modules\Search\Models\Like;
 use App\Modules\Search\Models\EDS\Item;
 
 use App\Modules\Search\Traits\Likeable;
 use App\Modules\Search\Traits\Saveable;
 use Livewire\Component;
 
-class Summary extends Component
+class Full extends Component
 {
 
     use Likeable, Saveable;
@@ -26,9 +27,7 @@ class Summary extends Component
 
     public function render()
     {
-        //dd($this->item);
-
-        return view('Search::partials.summary');
+        return view('Search::partials.full');
     }
 
 }

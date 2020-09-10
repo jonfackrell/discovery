@@ -17,3 +17,10 @@ if (! function_exists('setting')) {
         }
     }
 }
+
+if (! function_exists('emptyArray')) {
+    function emptyArray($array)
+    {
+        return empty(array_filter($array, function ($a) { return $a !== null;}));
+    }
+}

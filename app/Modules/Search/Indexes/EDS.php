@@ -2,9 +2,9 @@
 
 namespace App\Modules\Search\Indexes;
 
-use App\Facet;
-use App\Index;
-use App\Item;
+use App\Modules\Search\Models\Facet;
+use App\Modules\Search\Models\Index;
+use App\Modules\Search\Models\Item;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -51,6 +51,7 @@ class EDS implements IndexInterface
             $params
         );
         //logger()->info($response->json());
+        //dd($response->json());
         $results = [
             'stats' => [
                 'total' => null,
@@ -65,7 +66,7 @@ class EDS implements IndexInterface
                 ]
             ],
         ];
-
+        //dd($response);
         $items =  collect([]);
         if ($response->ok()) {
             if (!array_key_exists('Records', $response->json()['SearchResult']['Data'])) {
@@ -114,18 +115,18 @@ class EDS implements IndexInterface
                     }
                 }
 
-                $facets[] = (new Facet(['identifier' => $facet['Id'], 'name' => $facet['Label']]))->setRelation('values', $values);
+                $facets[$facet['Id']] = (new Facet(['identifier' => $facet['Id'], 'name' => $facet['Label']]))->setRelation('values', $values);
             }
 
             $results['facets'] = $facets;
             $results['stats']['total'] = $response->json()['SearchResult']['Statistics']['TotalHits'];
 
             $records = collect($response->json()['SearchResult']['Data']['Records']);
-            $min = $records->min('Header.RelevancyScore');
-            $max = $records->max('Header.RelevancyScore');
+            //$min = $records->min('Header.RelevancyScore');
+            //$max = $records->max('Header.RelevancyScore');
             foreach ($records as $key => $record) {
-                $relevancy = (($max-$min)>0)?intval((($record['Header']['RelevancyScore'] - $min)/($max - $min)) * 100):100;
-                $results['records']->put('EDS_' . $key, (new \App\Modules\Search\Models\EDS\Item(['relevancy' => $relevancy]))->setRecord($record));
+                //$relevancy = (($max-$min)>0)?intval((($record['Header']['RelevancyScore'] - $min)/($max - $min)) * 100):100;
+                $results['records']->put($key, (new \App\Modules\Search\Models\EDS\Item())->setRecord($record));
             }
         } elseif ($response->status() == 400) {
             session()->forget('session_token');
@@ -164,20 +165,22 @@ class EDS implements IndexInterface
 
     public function info()
     {
-        /*if($info = Index::where('name', 'EDS')->first()->info){
+        if($info = Index::where('name', 'EDS')->first()->info){
+            logger()->info('Info retrieved from DB.');
             return $info;
-        }*/
+        }
 
         $response = Http::withHeaders($this->headers)->get($this->baseUri . 'edsapi/rest/Info');
 
         if ($response->ok()) {
-            return $response->json();
+            //return $response->json();
 
-        /*
-        $index = Index::where('name', 'EDS')->first();
-        $index->info = $response->json();
-        $index->save();
-        return $index->info;*/
+            logger()->info('Info retrieved from API.');
+            $index = Index::where('name', 'EDS')->first();
+            $index->info = $response->json();
+            $index->save();
+            return $index->info;
+
         } elseif ($response->status() == 400) {
             session()->forget('session_token');
             $this->getSessionToken();
