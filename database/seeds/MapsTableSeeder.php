@@ -1,6 +1,6 @@
 <?php
 
-use App\Modules\Stackmaps\Models\Map;
+//use App\Modules\Stackmaps\Models\Map;
 use Illuminate\Database\Seeder;
 
 class MapsTableSeeder extends Seeder
@@ -13,7 +13,42 @@ class MapsTableSeeder extends Seeder
     public function run()
     {
 
+        $library = factory(\Jonfackrell\Maps\Models\Library::class, 1)->create([
+            'name' => 'David O. McKay Library',
+        ])->first();
 
+        $floor1 = factory(\Jonfackrell\Maps\Models\Floor::class, 1)->create([
+            'library_id' => $library->id,
+            'is_main' => true,
+            'url' => 'https://library.byui.edu/img/maps/mckay-library-first-floor.png',
+            'width' => '4522',
+            'height' => '3098',
+        ]);
+
+        $floor2 = factory(\Jonfackrell\Maps\Models\Floor::class, 1)->create([
+            'library_id' => $library->id,
+            'url' => 'https://library.byui.edu/img/maps/mckay-library-second-floor.png',
+            'width' => '4216',
+            'height' => '3194',
+        ]);
+
+        $floor3 = factory(\Jonfackrell\Maps\Models\Floor::class, 1)->create([
+            'library_id' => $library->id,
+            'url' => 'https://library.byui.edu/img/maps/mckay-library-third-floor.png',
+            'width' => '2283',
+            'height' => '2901',
+        ]);
+
+        $categories = factory(\Jonfackrell\Maps\Models\Category::class, 3)->create();
+
+        $amenities = factory(\Jonfackrell\Maps\Models\Amenity::class, 10)->create();
+
+        $locations = factory(\Jonfackrell\Maps\Models\Location::class, 10)->create([
+            'floor_id' => random_int(1, 3),
+            'category_id' => random_int(1, 3),
+        ]);
+
+/*
         // 1st Floor Popular Books
         factory(Map::class, 1)->create([
             'library' => 'David O. McKay Library',
@@ -838,15 +873,6 @@ class MapsTableSeeder extends Seeder
             'range_start' => 'A',
             'range_end' => 'Z',
             'image' => \Illuminate\Support\Facades\Storage::url('maps/JUV-stackmap-01.jpg'),
-        ]);
-
-        /*
-        factory(Map::class, 1)->create([
-            'library' => 'David O. McKay Library',
-            'collection' => 'General Books - 1st Floor',
-            'location' => '1st Floor',
-            'start' => Map::generateSortKey(''),
-            'end' => Map::generateSortKey(''),
         ]);
         */
     }

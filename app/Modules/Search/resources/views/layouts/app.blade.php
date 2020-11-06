@@ -12,7 +12,7 @@
     <!-- Fonts -->
 
 
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.0/dist/alpine.min.js" defer></script>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="https://kit.fontawesome.com/7fab6ddd2f.js" crossorigin="anonymous"></script>
@@ -21,11 +21,18 @@
 
     @stack('styles')
 
+    <style>
+        [x-cloak]{
+            display: none;
+        }
+    </style>
+
 </head>
 <body>
     <div id="app"
          x-data="{
             mobileMenu: false,
+            showhiddenfilters: false,
             account: false,
             mobileNav: false,
             SourceType: true,
@@ -44,7 +51,7 @@
 
         @include('Search::layouts.partials.top-nav')
 
-        <main>
+        <main x-cloak>
 
             @yield('content')
 

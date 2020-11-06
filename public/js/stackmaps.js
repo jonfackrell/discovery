@@ -634,7 +634,7 @@ stackmaps.init();
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\Jon\code\discovery\resources\js\stackmaps.js */"./resources/js/stackmaps.js");
+module.exports = __webpack_require__(/*! C:\Users\Jon\code\library\discovery\resources\js\stackmaps.js */"./resources/js/stackmaps.js");
 
 
 /***/ })

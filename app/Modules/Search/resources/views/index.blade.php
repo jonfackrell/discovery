@@ -20,11 +20,11 @@
         });
 
         document.addEventListener("livewire:load", function(event) {
-            window.livewire.hook('beforeDomUpdate', () => {
+            window.livewire.hook('message.received', () => {
                 // Add your custom JavaScript here.
             });
 
-            window.livewire.hook('afterDomUpdate', () => {
+            window.livewire.hook('message.processed', () => {
                 $('.subject-links searchlink').each(function (i, val) {
                     var $link = $(this);
                     $link.replaceWith([

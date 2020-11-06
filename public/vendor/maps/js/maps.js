@@ -1,0 +1,2 @@
+
+window.OpenSeadragon = require('openseadragon');

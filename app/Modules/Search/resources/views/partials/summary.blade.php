@@ -30,16 +30,18 @@
 
                         @if(in_array(setting('display'), ['standard', 'expanded']))
                             <p class="mt-1 text-md leading-5 text-black">
-                                {!! Str::limit($item['abstract'], 800, '...') !!}
+                                {!! Str::of($item['abstract'])->trim('Summary: ')->limit(800, '...') !!}
                             </p>
                         @endif
 
-                        <a href="{{ route('item.link', ['database' => $item['database'], 'an' => $item['an']]) }}"
-                              class="@if($item['database'] == 'cat03146a' && in_array($item['format'], ['Book', 'Map'])) raspberry @else btn btn-raspberry rounded-none @endif"
-                              target="_blank"
-                        >
-                            {{ $item['full_text_link']['label'] }}
-                        </a>
+                        <div class="my-2">
+                            <a href="{{ route('item.link', ['database' => $item['database'], 'an' => $item['an']]) }}"
+                               class="text-sm px-2 py-1 @if($item['database'] == 'cat03146a' && in_array($item['format'], ['Book', 'Map'])) raspberry @else btn-raspberry rounded-none @endif"
+                               target="_blank"
+                            >
+                                {{ $item['full_text_link']['label'] }}
+                            </a>
+                        </div>
 
                         @if(in_array(setting('display'), ['expanded']))
                             <div class="subject-links mt-2">

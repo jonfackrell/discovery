@@ -9,7 +9,7 @@ use App\Modules\Search\Models\EDS\Item;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use JonFackrell\Eds\Facades\EbscoDiscovery;
+use JonFackrell\DiscoveryApi\Facades\Discovery;
 use Livewire\Component;
 
 class Index extends Component
@@ -17,12 +17,23 @@ class Index extends Component
     public $an;
     public $database;
 
-    public $info;
+    //public $info;
+    public $count = 10;
+    public $date_range = ['min' => null, 'max' => null];
     public $facet = [];
     public $facets = [];
     public $items = [];
+    public $language = null;
+    public $mode = 'bool';
     public $total = 0;
     public $period = null;
+    public $to = null;
+    public $from = null;
+    public $min = null;
+    public $max = null;
+    public $minyear = null;
+    public $maxyear = null;
+    public $source_type = null;
 
     public $SourceType = [];
     public $CreationDate = [];
@@ -37,15 +48,19 @@ class Index extends Component
     public $ContentProvider = [];
 
     public $advanced = false;
-    public $term = null;
     public $field = null;
+    public $peer_review = false;
+    public $term = null;
 
-    protected $updatesQueryString = [
+    protected $queryString = [
         'an',
         'database',
         'term',
         'field',
+        'peer_review',
         'period',
+        'from',
+        'to',
         'facet',
         'SourceType',
         'CreationDate',
@@ -61,27 +76,28 @@ class Index extends Component
     ];
 
     protected $listeners = [
+        'setDateRange',
         'show',
     ];
 
     public function mount()
     {
-        $this->an = request('an');
-        $this->database = request('database');
+        //$this->an = request('an');
+        //$this->database = request('database');
 
-        $this->getInfo();
+        //$this->getInfo();
 
-        if(! empty(request('term'))){
+        /*if (! empty(request('term'))) {
             $request = new Request();
             $request->replace(request()->all());
             $this->getCriteria($request);
-        }
+        }*/
     }
 
     public function render()
     {
         // TODO: This is where we could check a config setting to open the item in a full page or a sidebar.
-        if(! empty($this->an)){
+        if (! empty($this->an)) {
             $index = new EDS();
             $record = $index->retrieve("$this->database|$this->an");
             $item = (new Item())->setRecord($record);
@@ -97,7 +113,6 @@ class Index extends Component
 
     public function search($data)
     {
-
         $request = new Request();
         $request->replace($data);
         $this->getCriteria($request);
@@ -105,7 +120,7 @@ class Index extends Component
 
     public function show($database, $an)
     {
-        if('detail' && auth()->guest()){
+        if ('detail' && auth()->guest()) {
             return redirect()->route('login');
         }
 
@@ -115,14 +130,14 @@ class Index extends Component
 
     public function searchIndex()
     {
-        if(empty($this->term)){
-           return;
+        if (empty($this->term)) {
+            return;
         }
 
         $facets = [];
 
-        foreach($this->getFacets() as $facet){
-            foreach($this->{$facet} as $value){
+        foreach ($this->getFacets() as $facet) {
+            foreach ($this->{$facet} as $value) {
                 $facets[] = "$facet:$value";
             }
         }
@@ -131,6 +146,7 @@ class Index extends Component
         $result = $index->search($this->term, [
             'field' => $this->field,
             'period' => $this->getPeriod(),
+            'peerReviewed' => $this->peer_review,
             'facets' => $facets,
             'language' => 'English',
             'mode' => 'bool',
@@ -142,19 +158,22 @@ class Index extends Component
         $this->facets = collect($result['facets'])->all();
         $this->items = $result['records']->all();
         $this->total = $result['stats']['total'];
+        $this->date_range = $result['date_range'];
+        $this->from = $result['date_range']['min'];
+        $this->to = $result['date_range']['max'];
     }
 
-    public function getInfo()
+    /*public function getInfo()
     {
         $this->info = EbscoDiscovery::info();
-    }
+    }*/
 
     public function getCriteria(Request $request)
     {
-        foreach($request->all() as $key => $value){
-            if(! empty($value)){
+        foreach ($request->all() as $key => $value) {
+            if (! empty($value)) {
                 $this->{$key} = $value;
-            }else{
+            } else {
                 $this->{$key} = null;
             }
         }
@@ -164,17 +183,24 @@ class Index extends Component
     {
         if (empty($this->period)) {
             return null;
-        } elseif ($this->period == 'custom') {
-            return ['period' => $this->period, 'min' => $this->from, 'max' => $this->to];
-        } else {
+        } elseif (is_integer($this->period)) {
             $now = now();
             return ['period' => $this->period, 'min' => $now->subYears($this->period)->format('Y-m'), 'max' => now()->format('Y-m')];
+        } elseif ($this->period == 'custom' || (! empty($this->from) && ! empty($this->to))) {
+            $this->period = 'custom';
+            return ['period' => $this->period, 'min' => "$this->from"."-1", 'max' => "$this->to"."-12"];
         }
+    }
+
+    public function setDateRange($params)
+    {
+        $this->period = $params['period'];
+        $this->to = $params['to'];
+        $this->from = $params['from'];
     }
 
     public function getFacets()
     {
         return explode('|', env('FACETS'));
     }
-
 }

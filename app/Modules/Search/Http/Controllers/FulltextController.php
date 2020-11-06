@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 
 use App\Modules\Search\Models\EDS\Item;
 use Illuminate\Http\Request;
-use JonFackrell\Eds\Facades\EbscoDiscovery;
+use JonFackrell\DiscoveryApi\Facades\Discovery;
 
 class FulltextController extends Controller
 {
@@ -18,7 +18,7 @@ class FulltextController extends Controller
     public function __invoke(Request $request, $database, $an)
     {
         //$index = new EDS();
-        $record = EbscoDiscovery::retrieve("$database|$an");
+        $record = Discovery::retrieve("$database|$an");
         $item = (new Item())->setRecord($record);
 
         return view('Search::embed', [
